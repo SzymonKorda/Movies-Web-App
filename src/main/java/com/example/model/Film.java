@@ -1,16 +1,17 @@
 package com.example.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name =  "film")
-public class Film {
+public class Film implements Serializable {
 
     @Id
     @Column(name = "film_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "title")
@@ -19,8 +20,8 @@ public class Film {
     @Column(name = "boxoffice")
     private Integer boxoffice;
 
-    @Column(name = "length")
-    private Integer length;
+    @Column(name = "duration")
+    private Integer duration;
 
     @ManyToMany
     @JoinTable(
@@ -58,12 +59,12 @@ public class Film {
         this.boxoffice = boxoffice;
     }
 
-    public Integer getLength() {
-        return length;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setLength(Integer length) {
-        this.length = length;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     public List<Actor> getActors() {

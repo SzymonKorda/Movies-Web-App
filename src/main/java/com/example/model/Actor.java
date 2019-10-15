@@ -1,16 +1,17 @@
 package com.example.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name =  "actor")
-public class Actor {
+public class Actor implements Serializable {
 
     @Id
     @Column(name = "actor_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "first_name")
