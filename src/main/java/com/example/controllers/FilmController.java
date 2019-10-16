@@ -32,4 +32,9 @@ public class FilmController {
     public Film updateFilm(@PathVariable Long filmId, @Valid @RequestBody Film filmRequest) {
         return filmService.updateFilm(filmId, filmRequest);
     }
+
+    @DeleteMapping("films/{filmId}")
+    public void deleteFilm(@PathVariable Long filmId) {
+        filmService.deleteFilmById(filmId);
+    }
 }
