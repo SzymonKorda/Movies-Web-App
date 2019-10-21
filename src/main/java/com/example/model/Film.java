@@ -1,27 +1,35 @@
 package com.example.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name =  "film")
-public class Film implements Serializable {
+public class Film {
 
     @Id
     @Column(name = "film_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "title")
+//    @NotBlank(message = "Title is mandatory")
+    @Column(name = "title", unique = true)
     private String title;
 
+//    @NotNull(message = "Boxoffice is mandatory")
     @Column(name = "boxoffice")
     private Integer boxoffice;
 
+//    @NotNull(message = "Duration is mandatory")
     @Column(name = "duration")
     private Integer duration;
+
+    //JOIN TABLES
 
     @ManyToMany
     @JoinTable(
