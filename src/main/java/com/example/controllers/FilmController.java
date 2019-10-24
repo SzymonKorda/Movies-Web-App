@@ -1,19 +1,15 @@
 package com.example.controllers;
 
+import com.example.exceptions.UniqueConstraintException;
 import com.example.model.Film;
-import com.example.repositories.FilmRepository;
 import com.example.services.FilmService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class FilmController {
@@ -30,8 +26,8 @@ public class FilmController {
     }
 
     @PostMapping("/films")
-    public Film createFilm(@Valid @RequestBody Film film) {
-        return filmService.newFilm(film);
+    public ResponseEntity<Film> createFilm(@Valid @RequestBody Film film) {
+        return ResponseEntity.accepted().body(filmService.newFilm(film));
     }
 
     @PutMapping("/films/{filmId}")
@@ -44,16 +40,18 @@ public class FilmController {
         filmService.deleteFilmById(filmId);
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String,String> handleValidationException(MethodArgumentNotValidException exception) {
-        Map<String,String> errors = new HashMap<>();
-        exception.getBindingResult().getAllErrors().forEach((error -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        } ));
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(UniqueConstraintException.class)
+//    public List<String> handleValidationExceptions(SQLException ex) {
+//        System.out.println("CZY JA SIE TU W OGOLE ZNALAZLEM");
+//        List<String> errors = new ArrayList<>();
+//        errors.add(ex.getSQLState());
+//        errors.add(Integer.toString(ex.getErrorCode()));
+//        errors.add(ex.getMessage());
+//
+//        return errors;
+//    }
 
-        return errors;
-    }
+
+
 }

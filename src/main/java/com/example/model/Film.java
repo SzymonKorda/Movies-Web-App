@@ -17,15 +17,15 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    @NotBlank(message = "Title is mandatory")
+    @NotBlank(message = "Title is mandatory")
     @Column(name = "title", unique = true)
     private String title;
 
-//    @NotNull(message = "Boxoffice is mandatory")
+    @NotNull(message = "Boxoffice is mandatory")
     @Column(name = "boxoffice")
     private Integer boxoffice;
 
-//    @NotNull(message = "Duration is mandatory")
+    @NotNull(message = "Duration is mandatory")
     @Column(name = "duration")
     private Integer duration;
 
