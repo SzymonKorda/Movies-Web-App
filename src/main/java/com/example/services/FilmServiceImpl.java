@@ -32,7 +32,7 @@ public class FilmServiceImpl implements FilmService {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if(rootCause instanceof SQLException) {
                 if("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new UniqueConstraintException("Film o takim tytule istnieje w bazie", rootCause);
+                    throw new UniqueConstraintException("A film with this title exists in the database", rootCause);
                 }
             }
         }
