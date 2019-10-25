@@ -1,5 +1,6 @@
 package com.example.services;
 
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.exceptions.UniqueConstraintException;
 import com.example.model.Film;
 import com.example.repositories.FilmRepository;
@@ -53,32 +54,13 @@ public class FilmServiceImpl implements FilmService {
             film.setBoxoffice(filmUpdated.getBoxoffice());
             film.setDuration(filmUpdated.getDuration());
             return filmRepository.save(film);
-        }).orElseThrow(() -> new RuntimeException("Film not found with id:" + filmId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Film", "id", filmId));
     }
 
     @Override
     public void deleteFilmById(Long filmId) {
-        filmRepository.deleteById(filmId);
-
-//        @DeleteMapping("/questions/{questionId}")
-//        public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
-//            return questionRepository.findById(questionId)
-//                    .map(question -> {
-//                        questionRepository.delete(question);
-//                        return ResponseEntity.ok().build();
-//                    }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
-//        }
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "id", filmId));
+        filmRepository.delete(film);
     }
-
-//    @Override
-//    public Film findById(Long filmId) {
-//        Optional<Film> filmOptional = filmRepository.findById(filmId);
-//
-//        if(!filmOptional.isPresent()) {
-//            throw new NotFoundException("Recipe Not Found for ID: " + filmId);
-//        }
-//
-//        return filmOptional.get();
-//    }
 
 }

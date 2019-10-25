@@ -5,6 +5,7 @@ import com.example.services.FilmService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,7 +42,8 @@ public class FilmController {
     }
 
     @DeleteMapping("films/{filmId}")
-    public void deleteFilm(@PathVariable Long filmId) {
+    public ResponseEntity<?> deleteFilm(@PathVariable Long filmId) {
         filmService.deleteFilmById(filmId);
+        return ResponseEntity.ok().build();
     }
 }

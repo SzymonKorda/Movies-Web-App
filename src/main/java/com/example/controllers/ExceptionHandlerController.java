@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.exceptions.UniqueConstraintException;
 import com.example.responses.DefaultErrorResponse;
 import org.springframework.http.HttpHeaders;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,6 +37,24 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         errors.setStatus(HttpStatus.CONFLICT.value());
 
         return new ResponseEntity<>(errors, HttpStatus.CONFLICT);
+    }
+
+    //Obsluga wyjatku dla podania blednego adresu (brak zasobu)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<DefaultErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        DefaultErrorResponse errors = new DefaultErrorResponse();
+        errors.setError(String.format("%s not found with %s : '%s'", ex.getResourceName(), ex.getFieldName(), ex.getFieldValue()));
+        errors.setStatus(HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    //Obsluga wyjatku gdy wpiszemy /films/rt zamiast id, TODO: poprawic
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public void constraintViolationException(HttpServletResponse response) throws IOException {
+        System.out.println("TUTAJ JESTEM");
+        response.sendError(HttpStatus.NOT_FOUND.value());
     }
 
 //    In other words, a MethodArgumentNotValidException is thrown when the validation fails.
