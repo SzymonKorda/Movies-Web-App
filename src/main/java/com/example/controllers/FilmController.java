@@ -1,11 +1,9 @@
 package com.example.controllers;
 
-import com.example.exceptions.UniqueConstraintException;
 import com.example.model.Film;
 import com.example.services.FilmService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +23,16 @@ public class FilmController {
         return filmService.findAllFilms(pageable);
     }
 
+    //@RequestBody odpowiada za to, ze jak przychodzi JSON to konwertuje go na film
+    //a potem serializuje go na JSONA
+    //@Valid uruchamia walidacje dla filmu (JSR-303)
+//    ResponseEntity represents the whole HTTP response: status code, headers, and body.
+//    Because of it, we can use it to fully configure the HTTP response.
+//    If we want to use it, we have to return it from the endpoint;
     @PostMapping("/films")
-    public ResponseEntity<Film> createFilm(@Valid @RequestBody Film film) {
-        return ResponseEntity.accepted().body(filmService.newFilm(film));
+    public Film createFilm(@Valid @RequestBody Film film) {
+//        return ResponseEntity.accepted().body(filmService.newFilm(film));
+        return filmService.newFilm(film);
     }
 
     @PutMapping("/films/{filmId}")
@@ -39,19 +44,4 @@ public class FilmController {
     public void deleteFilm(@PathVariable Long filmId) {
         filmService.deleteFilmById(filmId);
     }
-
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(UniqueConstraintException.class)
-//    public List<String> handleValidationExceptions(SQLException ex) {
-//        System.out.println("CZY JA SIE TU W OGOLE ZNALAZLEM");
-//        List<String> errors = new ArrayList<>();
-//        errors.add(ex.getSQLState());
-//        errors.add(Integer.toString(ex.getErrorCode()));
-//        errors.add(ex.getMessage());
-//
-//        return errors;
-//    }
-
-
-
 }

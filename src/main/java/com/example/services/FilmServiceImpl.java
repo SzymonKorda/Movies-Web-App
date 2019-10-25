@@ -26,6 +26,7 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public Film newFilm(Film film) {
+        //musimy "odpakowac" wyjatek i dopiero potem go obsluzyc
         try {
             filmRepository.save(film);
         } catch(RuntimeException e) {
@@ -36,6 +37,7 @@ public class FilmServiceImpl implements FilmService {
                 }
             }
         }
+        //nastepnie pobieramy zapisany juz film razem z ID a jezeli go nie ma to zwracamy ten zduplikowany(inaczej sie pluje ze nia ma return)
         Optional<Film> filmOptional = filmRepository.findById(film.getId());
         if(!filmOptional.isPresent()) {
             return filmOptional.get();

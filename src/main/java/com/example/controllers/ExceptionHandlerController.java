@@ -2,28 +2,19 @@ package com.example.controllers;
 
 import com.example.exceptions.UniqueConstraintException;
 import com.example.responses.DefaultErrorResponse;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.HashMap;
-import java.util.Map;
-
+//globalny generyczny handler dla wyjatku unique costraint
+//tworzymy customowa odpowiedz symulujaca slownik by zwrocic odpowiednia odpowiedz(JSON)
 @ControllerAdvice
 public class ExceptionHandlerController  {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(UniqueConstraintException.class)
     public ResponseEntity<DefaultErrorResponse> exceptionH(UniqueConstraintException exception) {
-//        Map<String, String> errors = new HashMap<>();
-//        errors.put("Status:", "409");
-//        errors.put("Error Message: ", String.valueOf(exception.getCause()));
-//        errors.put("Message: ", exception.getMessage());
-//        return new ResponseEntity<>(errors, HttpStatus.CONFLICT);
-
         DefaultErrorResponse errors = new DefaultErrorResponse();
         errors.setError(exception.getMessage());
         errors.setStatus(HttpStatus.CONFLICT.value());
