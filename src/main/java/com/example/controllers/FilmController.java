@@ -5,6 +5,8 @@ import com.example.services.FilmService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ public class FilmController {
     }
 
     @GetMapping("/films")
+//    @PreAuthorize("isAnonymous()")
     public Page<Film> getFilms(Pageable pageable) {
         return filmService.findAllFilms(pageable);
     }
@@ -42,6 +45,7 @@ public class FilmController {
     }
 
     @DeleteMapping("films/{filmId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteFilm(@PathVariable Long filmId) {
         filmService.deleteFilmById(filmId);
         return ResponseEntity.ok().build();
