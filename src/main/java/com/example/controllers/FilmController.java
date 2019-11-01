@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @RestController
@@ -22,7 +23,6 @@ public class FilmController {
     }
 
     @GetMapping("/films")
-//    @PreAuthorize("isAnonymous()")
     public Page<Film> getFilms(Pageable pageable) {
         return filmService.findAllFilms(pageable);
     }
@@ -34,6 +34,7 @@ public class FilmController {
 //    Because of it, we can use it to fully configure the HTTP response.
 //    If we want to use it, we have to return it from the endpoint;
     @PostMapping("/films")
+    @RolesAllowed("ROLE_USER")
     public Film createFilm(@Valid @RequestBody Film film) {
 //        return ResponseEntity.accepted().body(filmService.newFilm(film));
         return filmService.newFilm(film);
@@ -45,7 +46,7 @@ public class FilmController {
     }
 
     @DeleteMapping("films/{filmId}")
-    @PreAuthorize("hasRole('USER')")
+    @RolesAllowed("ROLE_USER")
     public ResponseEntity<?> deleteFilm(@PathVariable Long filmId) {
         filmService.deleteFilmById(filmId);
         return ResponseEntity.ok().build();
