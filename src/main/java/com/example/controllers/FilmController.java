@@ -1,14 +1,16 @@
 package com.example.controllers;
 
 import com.example.model.Film;
+import com.example.payload.FilmUpdateRequest;
+import com.example.payload.NewFilmRequest;
+import com.example.payload.ApiResponse;
 import com.example.services.FilmService;
+import com.example.payload.FilmResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
@@ -35,20 +37,24 @@ public class FilmController {
 //    If we want to use it, we have to return it from the endpoint;
     @PostMapping("/films")
     @RolesAllowed("ROLE_USER")
-    public Film createFilm(@Valid @RequestBody Film film) {
-//        return ResponseEntity.accepted().body(filmService.newFilm(film));
-        return filmService.newFilm(film);
+    public ResponseEntity<?> createFilm(@Valid @RequestBody NewFilmRequest newFilmRequest) {
+        Film film = filmService.newFilm(newFilmRequest);
+
+        return ResponseEntity.ok(new ApiResponse(true, "Film Created Successfully"));
     }
 
     @PutMapping("/films/{filmId}")
-    public Film updateFilm(@PathVariable Long filmId, @Valid @RequestBody Film filmRequest) {
-        return filmService.updateFilm(filmId, filmRequest);
+    @RolesAllowed("ROLE_USER")
+    public ResponseEntity<?> updateFilm(@PathVariable Long filmId, @Valid @RequestBody FilmUpdateRequest filmUpdateRequest) {
+        Film film = filmService.updateFilm(filmId, filmUpdateRequest);
+
+        return ResponseEntity.ok(new ApiResponse(true, "Film updated"));
     }
 
     @DeleteMapping("films/{filmId}")
     @RolesAllowed("ROLE_USER")
     public ResponseEntity<?> deleteFilm(@PathVariable Long filmId) {
         filmService.deleteFilmById(filmId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new ApiResponse(true, "Film deleted successfully"));
     }
 }

@@ -3,13 +3,13 @@ package com.example.services;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.exceptions.UniqueConstraintException;
 import com.example.model.Film;
+import com.example.payload.FilmUpdateRequest;
+import com.example.payload.NewFilmRequest;
 import com.example.repositories.FilmRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.sql.SQLException;
-import java.util.Optional;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -26,7 +26,13 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Film newFilm(Film film) {
+    public Film newFilm(NewFilmRequest newFilmRequest) {
+
+        Film film = new Film();
+        film.setTitle(newFilmRequest.getTitle());
+        film.setDuration(newFilmRequest.getDuration());
+        film.setBoxoffice(newFilmRequest.getBoxoffice());
+
         //musimy "odpakowac" wyjatek i dopiero potem go obsluzyc
         try {
             filmRepository.save(film);
@@ -38,21 +44,26 @@ public class FilmServiceImpl implements FilmService {
                 }
             }
         }
-        //nastepnie pobieramy zapisany juz film razem z ID a jezeli go nie ma to zwracamy ten zduplikowany(inaczej sie pluje ze nia ma return)
-        Optional<Film> filmOptional = filmRepository.findById(film.getId());
-        if(!filmOptional.isPresent()) {
-            return filmOptional.get();
-        } else {
-            return film;
-        }
+
+        return film;
     }
 
     @Override
-    public Film updateFilm(Long filmId, Film filmUpdated) {
+    public Film updateFilm(Long filmId, FilmUpdateRequest filmUpdateRequest) {
+
         return filmRepository.findById(filmId).map(film -> {
-            film.setTitle(filmUpdated.getTitle());
-            film.setBoxoffice(filmUpdated.getBoxoffice());
-            film.setDuration(filmUpdated.getDuration());
+            if(!(filmUpdateRequest.getTitle() == null)) {
+                film.setTitle(filmUpdateRequest.getTitle());
+            }
+
+            if(!(filmUpdateRequest.getBoxoffice() == null)) {
+                film.setBoxoffice(filmUpdateRequest.getBoxoffice());
+            }
+
+            if(!(filmUpdateRequest.getDuration() == null)) {
+                film.setDuration(filmUpdateRequest.getDuration());
+            }
+
             return filmRepository.save(film);
         }).orElseThrow(() -> new ResourceNotFoundException("Film", "id", filmId));
     }

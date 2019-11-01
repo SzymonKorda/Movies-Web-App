@@ -1,16 +1,17 @@
 package com.example.services;
 
 import com.example.model.Film;
+import com.example.payload.FilmUpdateRequest;
+import com.example.payload.NewFilmRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 
 public interface FilmService {
 
 //    Film findById(Long filmId);
     Page<Film> findAllFilms(Pageable pageable);
-    Film newFilm(Film film);
-    Film updateFilm(Long filmId, Film filmUpdated);
+    Film newFilm(NewFilmRequest newFilmRequest);
+    Film updateFilm(Long filmId, FilmUpdateRequest filmUpdateRequest);
     void deleteFilmById(Long filmId);
 
 }
