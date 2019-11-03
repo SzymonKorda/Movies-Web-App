@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class FilmController {
@@ -24,9 +25,14 @@ public class FilmController {
         this.filmService = filmService;
     }
 
+//    @GetMapping("/films")
+//    public Page<Film> getFilms(Pageable pageable) {
+//        return filmService.findAllFilms(pageable);
+//    }
+
     @GetMapping("/films")
-    public Page<Film> getFilms(Pageable pageable) {
-        return filmService.findAllFilms(pageable);
+    public List<Film> getFilms() {
+        return filmService.findAllFilms();
     }
 
     //@RequestBody odpowiada za to, ze jak przychodzi JSON to konwertuje go na film

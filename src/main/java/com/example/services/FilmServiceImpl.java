@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -20,9 +21,14 @@ public class FilmServiceImpl implements FilmService {
         this.filmRepository = filmRepository;
     }
 
+//    @Override
+//    public Page<Film> findAllFilms(Pageable pageable) {
+//        return filmRepository.findAll(pageable);
+//    }
+
     @Override
-    public Page<Film> findAllFilms(Pageable pageable) {
-        return filmRepository.findAll(pageable);
+    public List<Film> findAllFilms() {
+        return filmRepository.findAll();
     }
 
     @Override

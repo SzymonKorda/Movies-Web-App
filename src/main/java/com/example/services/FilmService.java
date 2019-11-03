@@ -6,10 +6,13 @@ import com.example.payload.NewFilmRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface FilmService {
 
 //    Film findById(Long filmId);
-    Page<Film> findAllFilms(Pageable pageable);
+//    Page<Film> findAllFilms(Pageable pageable);
+    List<Film> findAllFilms();
     Film newFilm(NewFilmRequest newFilmRequest);
     Film updateFilm(Long filmId, FilmUpdateRequest filmUpdateRequest);
     void deleteFilmById(Long filmId);
