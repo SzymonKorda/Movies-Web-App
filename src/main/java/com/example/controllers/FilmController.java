@@ -28,7 +28,7 @@ public class FilmController {
 //    }
 
     @GetMapping("/films")
-    public List<Film> getFilms() {
+    public List<SimpleFilmResponse> getFilms() {
         return filmService.findAllFilms();
     }
 

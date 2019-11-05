@@ -6,11 +6,13 @@ import com.example.model.Film;
 import com.example.payload.FilmUpdateRequest;
 import com.example.payload.FullFilmResponse;
 import com.example.payload.NewFilmRequest;
+import com.example.payload.SimpleFilmResponse;
 import com.example.repositories.FilmRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,8 +30,19 @@ public class FilmServiceImpl implements FilmService {
 //    }
 
     @Override
-    public List<Film> findAllFilms() {
-        return filmRepository.findAll();
+    public List<SimpleFilmResponse> findAllFilms() {
+        List<Film> filmList = filmRepository.findAll();
+        List<SimpleFilmResponse> simpleFilmResponseList = new ArrayList<>();
+        filmList.forEach(film -> {
+            SimpleFilmResponse simpleFilmResponse = new SimpleFilmResponse();
+            simpleFilmResponse.setId(film.getId());
+            simpleFilmResponse.setTitle(film.getTitle());
+            simpleFilmResponse.setBoxoffice(film.getBoxoffice());
+            simpleFilmResponse.setDuration(film.getDuration());
+            simpleFilmResponseList.add(simpleFilmResponse);
+        });
+
+        return simpleFilmResponseList;
     }
 
     @Override
