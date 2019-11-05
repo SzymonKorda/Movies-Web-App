@@ -1,11 +1,8 @@
 package com.example.controllers;
 
 import com.example.model.Film;
-import com.example.payload.FilmUpdateRequest;
-import com.example.payload.NewFilmRequest;
-import com.example.payload.ApiResponse;
+import com.example.payload.*;
 import com.example.services.FilmService;
-import com.example.payload.FilmResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +32,10 @@ public class FilmController {
         return filmService.findAllFilms();
     }
 
+    @GetMapping("/films/{filmId}")
+    public FullFilmResponse getFilm(@PathVariable Long filmId) {
+        return filmService.getFilmById(filmId);
+    }
     //@RequestBody odpowiada za to, ze jak przychodzi JSON to konwertuje go na film
     //a potem serializuje go na JSONA
     //@Valid uruchamia walidacje dla filmu (JSR-303)

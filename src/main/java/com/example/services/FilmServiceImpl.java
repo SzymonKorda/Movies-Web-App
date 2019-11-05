@@ -4,6 +4,7 @@ import com.example.exceptions.ResourceNotFoundException;
 import com.example.exceptions.UniqueConstraintException;
 import com.example.model.Film;
 import com.example.payload.FilmUpdateRequest;
+import com.example.payload.FullFilmResponse;
 import com.example.payload.NewFilmRequest;
 import com.example.repositories.FilmRepository;
 import org.springframework.data.domain.Page;
@@ -80,4 +81,15 @@ public class FilmServiceImpl implements FilmService {
         filmRepository.delete(film);
     }
 
+    @Override
+    public FullFilmResponse getFilmById(Long filmId) {
+        FullFilmResponse fullFilmResponse = new FullFilmResponse();
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "id", filmId));
+
+        fullFilmResponse.setTitle(film.getTitle());
+        fullFilmResponse.setBoxoffice(film.getBoxoffice());
+        fullFilmResponse.setDuration(film.getDuration());
+
+        return fullFilmResponse;
+    }
 }
