@@ -45,16 +45,14 @@ public class FilmController {
     @PostMapping("/films")
     @RolesAllowed("ROLE_USER")
     public ResponseEntity<?> createFilm(@Valid @RequestBody NewFilmRequest newFilmRequest) {
-        Film film = filmService.newFilm(newFilmRequest);
-
+        filmService.newFilm(newFilmRequest);
         return ResponseEntity.ok(new ApiResponse(true, "Film Created Successfully"));
     }
 
     @PutMapping("/films/{filmId}")
     @RolesAllowed("ROLE_USER")
     public ResponseEntity<?> updateFilm(@PathVariable Long filmId, @Valid @RequestBody FilmUpdateRequest filmUpdateRequest) {
-        Film film = filmService.updateFilm(filmId, filmUpdateRequest);
-
+        filmService.updateFilm(filmId, filmUpdateRequest);
         return ResponseEntity.ok(new ApiResponse(true, "Film updated"));
     }
 
@@ -62,6 +60,6 @@ public class FilmController {
     @RolesAllowed("ROLE_USER")
     public ResponseEntity<?> deleteFilm(@PathVariable Long filmId) {
         filmService.deleteFilmById(filmId);
-        return ResponseEntity.ok().body(new ApiResponse(true, "Film deleted successfully"));
+        return ResponseEntity.ok(new ApiResponse(true, "Film deleted successfully"));
     }
 }
