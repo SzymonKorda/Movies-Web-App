@@ -1,5 +1,10 @@
 package com.example.payload;
 
+import com.example.model.Actor;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class FullFilmResponse {
 
     private String title;
@@ -7,6 +12,16 @@ public class FullFilmResponse {
     private Integer boxoffice;
 
     private Integer duration;
+
+    private List<Actor> actors = new ArrayList<>();
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
+    }
 
     public String getTitle() {
         return title;
