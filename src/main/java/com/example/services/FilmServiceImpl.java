@@ -2,15 +2,16 @@ package com.example.services;
 
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.exceptions.UniqueConstraintException;
+import com.example.model.Actor;
 import com.example.model.Film;
-import com.example.payload.FilmUpdateRequest;
-import com.example.payload.FullFilmResponse;
-import com.example.payload.NewFilmRequest;
-import com.example.payload.SimpleFilmResponse;
+import com.example.payload.*;
+import com.example.repositories.ActorRepository;
 import com.example.repositories.FilmRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,14 @@ import java.util.List;
 public class FilmServiceImpl implements FilmService {
 
     private FilmRepository filmRepository;
+    private ActorRepository actorRepository;
 
-    public FilmServiceImpl(FilmRepository filmRepository) {
+    public FilmServiceImpl(FilmRepository filmRepository, ActorRepository actorRepository) {
         this.filmRepository = filmRepository;
+        this.actorRepository = actorRepository;
     }
 
-//    @Override
+    //    @Override
 //    public Page<Film> findAllFilms(Pageable pageable) {
 //        return filmRepository.findAll(pageable);
 //    }
@@ -95,7 +98,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public FullFilmResponse getFilmById(Long filmId) {
+    public FullFilmResponse findFilmById(Long filmId) {
         FullFilmResponse fullFilmResponse = new FullFilmResponse();
         Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "id", filmId));
 
@@ -104,5 +107,17 @@ public class FilmServiceImpl implements FilmService {
         fullFilmResponse.setDuration(film.getDuration());
 
         return fullFilmResponse;
+    }
+
+    //TODO taki sam aktor w jednym filmie (HashSet)
+    @Override
+    @Transactional
+    public void addActorToFilm(Long filmId, IdRequest idRequest) {
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "id", filmId));
+        Actor actor = actorRepository.findById(idRequest.getId()).orElseThrow(() -> new ResourceNotFoundException("Actor", "id", idRequest.getId()));
+        film.getActors().add(actor);
+        actor.getFilms().add(film);
+
+        film.setActors(film.getActors());
     }
 }

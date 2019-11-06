@@ -1,10 +1,7 @@
 package com.example.services;
 
 import com.example.model.Film;
-import com.example.payload.FilmUpdateRequest;
-import com.example.payload.FullFilmResponse;
-import com.example.payload.NewFilmRequest;
-import com.example.payload.SimpleFilmResponse;
+import com.example.payload.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,6 +15,7 @@ public interface FilmService {
     Film newFilm(NewFilmRequest newFilmRequest);
     Film updateFilm(Long filmId, FilmUpdateRequest filmUpdateRequest);
     void deleteFilmById(Long filmId);
-    FullFilmResponse getFilmById(Long filmId);
+    FullFilmResponse findFilmById(Long filmId);
+    void addActorToFilm(Long filmId, IdRequest idRequest);
 
 }

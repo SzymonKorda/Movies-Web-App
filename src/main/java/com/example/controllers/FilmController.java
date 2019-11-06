@@ -2,6 +2,7 @@ package com.example.controllers;
 
 import com.example.model.Film;
 import com.example.payload.*;
+import com.example.services.ActorService;
 import com.example.services.FilmService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,12 +18,14 @@ import java.util.List;
 public class FilmController {
 
     private FilmService filmService;
+    private ActorService actorService;
 
-    public FilmController(FilmService filmService) {
+    public FilmController(FilmService filmService, ActorService actorService) {
         this.filmService = filmService;
+        this.actorService = actorService;
     }
 
-//    @GetMapping("/films")
+    //    @GetMapping("/films")
 //    public Page<Film> getFilms(Pageable pageable) {
 //        return filmService.findAllFilms(pageable);
 //    }
@@ -34,7 +37,7 @@ public class FilmController {
 
     @GetMapping("/films/{filmId}")
     public FullFilmResponse getFilm(@PathVariable Long filmId) {
-        return filmService.getFilmById(filmId);
+        return filmService.findFilmById(filmId);
     }
     //@RequestBody odpowiada za to, ze jak przychodzi JSON to konwertuje go na film
     //a potem serializuje go na JSONA
@@ -61,5 +64,12 @@ public class FilmController {
     public ResponseEntity<?> deleteFilm(@PathVariable Long filmId) {
         filmService.deleteFilmById(filmId);
         return ResponseEntity.ok(new ApiResponse(true, "Film deleted successfully"));
+    }
+
+    @PostMapping("films/{filmId}/actors")
+    @RolesAllowed("ROLE_USER")
+    public ResponseEntity<?> addActorToFilm(@PathVariable Long filmId, @Valid @RequestBody IdRequest idRequest) {
+        filmService.addActorToFilm(filmId, idRequest);
+        return ResponseEntity.ok(new ApiResponse(true, "Actor added to film successfully"));
     }
 }
