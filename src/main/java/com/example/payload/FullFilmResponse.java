@@ -13,13 +13,13 @@ public class FullFilmResponse {
 
     private Integer duration;
 
-    private List<Actor> actors = new ArrayList<>();
+    private List<SimpleActorResponse> actors = new ArrayList<>();
 
-    public List<Actor> getActors() {
+    public List<SimpleActorResponse> getActors() {
         return actors;
     }
 
-    public void setActors(List<Actor> actors) {
+    public void setActors(List<SimpleActorResponse> actors) {
         this.actors = actors;
     }
 

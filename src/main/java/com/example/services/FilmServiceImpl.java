@@ -105,8 +105,15 @@ public class FilmServiceImpl implements FilmService {
         fullFilmResponse.setTitle(film.getTitle());
         fullFilmResponse.setBoxoffice(film.getBoxoffice());
         fullFilmResponse.setDuration(film.getDuration());
-        fullFilmResponse.setActors(film.getActors());
 
+        for(Actor actor : film.getActors()) {
+            SimpleActorResponse simpleActorResponse = new SimpleActorResponse();
+            simpleActorResponse.setId(actor.getId());
+            simpleActorResponse.setFirstname(actor.getFirstname());
+            simpleActorResponse.setLastname(actor.getLastname());
+            simpleActorResponse.setHeight(actor.getHeight());
+            fullFilmResponse.getActors().add(simpleActorResponse);
+        }
 
         return fullFilmResponse;
     }
