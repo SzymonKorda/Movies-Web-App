@@ -2,20 +2,32 @@ package com.example.controllers;
 
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.User;
+import com.example.payload.ApiResponse;
+import com.example.payload.IdRequest;
 import com.example.payload.UserProfileResponse;
 import com.example.repositories.UserRepository;
+import com.example.services.FilmService;
+import com.example.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
 
 @RestController
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    private FilmService filmService;
+    private UserService userService;
+
+    public UserController(FilmService filmService, UserService userService) {
+        this.filmService = filmService;
+        this.userService = userService;
+    }
 
     @GetMapping("/users/{userId}")
     @RolesAllowed("ROLE_USER")
@@ -29,4 +41,15 @@ public class UserController {
 
         return userProfileResponse;
     }
+
+    @PostMapping("/users/{userId}/films")
+    @RolesAllowed("ROLE_USER")
+    public ResponseEntity<?> addFilmToUser(@PathVariable Long userId, @Valid @RequestBody IdRequest idRequest) {
+        userService.addFilmToActor(userId, idRequest);
+        return ResponseEntity.ok(new ApiResponse(true, "Film added to User successfully"));
+    }
+
+
+
+
 }

@@ -46,6 +46,14 @@ public class Film {
 
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public long getId() {
         return id;
     }

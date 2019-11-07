@@ -1,5 +1,7 @@
 package com.example.payload;
 
+import java.util.List;
+
 public class SimpleFilmResponse {
 
     private Long id;

@@ -1,5 +1,8 @@
 package com.example.payload;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserProfileResponse {
 
     private Long id;
@@ -9,6 +12,16 @@ public class UserProfileResponse {
     private String username;
 
     private String email;
+
+    private List<SimpleFilmResponse> userFilms = new ArrayList<>();
+
+    public List<SimpleFilmResponse> getUserFilms() {
+        return userFilms;
+    }
+
+    public void setUserFilms(List<SimpleFilmResponse> userFilms) {
+        this.userFilms = userFilms;
+    }
 
     public Long getId() {
         return id;
