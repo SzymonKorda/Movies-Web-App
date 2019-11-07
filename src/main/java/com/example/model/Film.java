@@ -39,6 +39,9 @@ public class Film {
     )
     private List<Actor> actors = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "userFilms")
+    private List<User> users = new ArrayList<>();
+
     public Film() {
 
     }

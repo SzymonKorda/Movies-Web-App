@@ -7,7 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -48,6 +50,15 @@ public class User extends DateAudit {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "User_films",
+            joinColumns = { @JoinColumn(name = "user_id")},
+            inverseJoinColumns = { @JoinColumn(name = "film_id") }
+    )
+    private List<Film> userFilms = new ArrayList<>();
+
+
     public User() {
 
 
@@ -58,6 +69,14 @@ public class User extends DateAudit {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public List<Film> getUserFilms() {
+        return userFilms;
+    }
+
+    public void setUserFilms(List<Film> userFilms) {
+        this.userFilms = userFilms;
     }
 
     public Long getId() {
