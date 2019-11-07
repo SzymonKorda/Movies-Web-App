@@ -1,6 +1,7 @@
 package com.example.controllers;
 
 import com.example.exceptions.AppException;
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.Role;
 import com.example.model.RoleName;
 import com.example.model.User;
@@ -61,7 +62,11 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+
+        User user = userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Name", loginRequest.getUsernameOrEmail()));
+
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, user.getId()));
     }
 
     @PostMapping("/signup")
