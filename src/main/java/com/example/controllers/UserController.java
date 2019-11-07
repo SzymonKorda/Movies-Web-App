@@ -18,9 +18,6 @@ import javax.validation.Valid;
 @RestController
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
-
     private FilmService filmService;
     private UserService userService;
 
@@ -32,14 +29,7 @@ public class UserController {
     @GetMapping("/users/{userId}")
     @RolesAllowed("ROLE_USER")
     public UserProfileResponse getUserProfile(@PathVariable Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        UserProfileResponse userProfileResponse = new UserProfileResponse();
-        userProfileResponse.setId(user.getId());
-        userProfileResponse.setName(user.getName());
-        userProfileResponse.setUsername(user.getUsername());
-        userProfileResponse.setEmail(user.getEmail());
-
-        return userProfileResponse;
+        return userService.findUserById(userId);
     }
 
     @PostMapping("/users/{userId}/films")
