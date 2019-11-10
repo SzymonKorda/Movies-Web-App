@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 public class CustomUserDetailService implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     @Transactional

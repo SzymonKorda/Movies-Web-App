@@ -1,11 +1,11 @@
 package com.example.controllers;
 
-import com.example.model.Film;
 import com.example.payload.*;
+import com.example.security.CurrentUser;
+import com.example.security.UserPrincipal;
 import com.example.services.ActorService;
+import com.example.services.CommentService;
 import com.example.services.FilmService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +19,13 @@ public class FilmController {
 
     private FilmService filmService;
     private ActorService actorService;
+    private CommentService commentService;
 
-    public FilmController(FilmService filmService, ActorService actorService) {
+
+    public FilmController(FilmService filmService, ActorService actorService, CommentService commentService) {
         this.filmService = filmService;
         this.actorService = actorService;
+        this.commentService = commentService;
     }
 
     //    @GetMapping("/films")
@@ -71,5 +74,12 @@ public class FilmController {
     public ResponseEntity<?> addActorToFilm(@PathVariable Long filmId, @Valid @RequestBody IdRequest idRequest) {
         filmService.addActorToFilm(filmId, idRequest);
         return ResponseEntity.ok(new ApiResponse(true, "Actor added to film successfully"));
+    }
+
+    @PostMapping("films/{filmId}/comment")
+    @RolesAllowed("ROLE_USER")
+    public ResponseEntity<?> addCommentToFilm(@CurrentUser UserPrincipal currentUser, @PathVariable Long filmId, @Valid @RequestBody NewCommentRequest newCommentRequest) {
+        filmService.addCommentToFilm(currentUser, filmId, newCommentRequest);
+        return ResponseEntity.ok(new ApiResponse(true, "Comment added to film successfully"));
     }
 }

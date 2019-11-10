@@ -3,12 +3,13 @@ package com.example.services;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.exceptions.UniqueConstraintException;
 import com.example.model.Actor;
+import com.example.model.Comment;
 import com.example.model.Film;
 import com.example.payload.*;
 import com.example.repositories.ActorRepository;
+import com.example.repositories.CommentRepository;
 import com.example.repositories.FilmRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.example.security.UserPrincipal;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,10 +22,12 @@ public class FilmServiceImpl implements FilmService {
 
     private FilmRepository filmRepository;
     private ActorRepository actorRepository;
+    private CommentRepository commentRepository;
 
-    public FilmServiceImpl(FilmRepository filmRepository, ActorRepository actorRepository) {
+    public FilmServiceImpl(FilmRepository filmRepository, ActorRepository actorRepository, CommentRepository commentRepository) {
         this.filmRepository = filmRepository;
         this.actorRepository = actorRepository;
+        this.commentRepository = commentRepository;
     }
 
     //    @Override
@@ -128,5 +131,19 @@ public class FilmServiceImpl implements FilmService {
         actor.getFilms().add(film);
 
         film.setActors(film.getActors());
+    }
+
+
+    @Override
+    @Transactional
+    public void addCommentToFilm(UserPrincipal currentUser, Long filmId, NewCommentRequest newCommentRequest) {
+        Comment comment = new Comment();
+        comment.setFilmId(filmId);
+        comment.setUserId(currentUser.getId());
+        comment.setContent(newCommentRequest.getContent());
+        commentRepository.save(comment);
+
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "Id", filmId));
+        film.getComments().add(comment);
     }
 }

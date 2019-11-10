@@ -6,6 +6,7 @@ import com.example.model.User;
 import com.example.payload.IdRequest;
 import com.example.payload.SimpleFilmResponse;
 import com.example.payload.UserProfileResponse;
+import com.example.repositories.CommentRepository;
 import com.example.repositories.FilmRepository;
 import com.example.repositories.UserRepository;
 import org.springframework.stereotype.Service;

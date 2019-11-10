@@ -42,8 +42,20 @@ public class Film {
     @ManyToMany(mappedBy = "userFilms")
     private List<User> users = new ArrayList<>();
 
+    @OneToMany
+    @JoinColumn(name = "film_id")
+    private List<Comment> comments = new ArrayList<>();
+
     public Film() {
 
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public List<User> getUsers() {
