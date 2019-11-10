@@ -1,16 +1,10 @@
 package com.example.controllers;
 
-import com.example.payload.ApiResponse;
-import com.example.payload.NewActorRequest;
-import com.example.payload.NewFilmRequest;
-import com.example.payload.SimpleActorResponse;
+import com.example.payload.*;
 import com.example.services.ActorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
@@ -35,6 +29,11 @@ public class ActorController {
     @GetMapping("/actors")
     public List<SimpleActorResponse> getActors() {
         return actorService.getAllActors();
+    }
+
+    @GetMapping("/actors/{actorId}")
+    public FullActorResponse getActor(@PathVariable Long actorId) {
+        return actorService.findActorById(actorId);
     }
 
 }

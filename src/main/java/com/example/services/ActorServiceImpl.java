@@ -1,6 +1,8 @@
 package com.example.services;
 
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.Actor;
+import com.example.payload.FullActorResponse;
 import com.example.payload.NewActorRequest;
 import com.example.payload.SimpleActorResponse;
 import com.example.repositories.ActorRepository;
@@ -43,5 +45,18 @@ public class ActorServiceImpl implements ActorService {
         }
 
         return simpleActorResponseList;
+    }
+
+    @Override
+    public FullActorResponse findActorById(Long actorId) {
+        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new ResourceNotFoundException("Actor", "Id", actorId));
+        FullActorResponse fullActorResponse = new FullActorResponse();
+
+        fullActorResponse.setId(actor.getId());
+        fullActorResponse.setFirstname(actor.getFirstname());
+        fullActorResponse.setLastname(actor.getLastname());
+        fullActorResponse.setHeight(actor.getHeight());
+
+        return fullActorResponse;
     }
 }
