@@ -3,15 +3,18 @@ package com.example.controllers;
 import com.example.payload.ApiResponse;
 import com.example.payload.NewActorRequest;
 import com.example.payload.NewFilmRequest;
+import com.example.payload.SimpleActorResponse;
 import com.example.services.ActorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ActorController {
@@ -28,4 +31,10 @@ public class ActorController {
         actorService.newActor(newActorRequest);
         return ResponseEntity.ok(new ApiResponse(true, "Actor Created Successfully"));
     }
+
+    @GetMapping("/actors")
+    public List<SimpleActorResponse> getActors() {
+        return actorService.getAllActors();
+    }
+
 }
