@@ -15,6 +15,16 @@ public class FullFilmResponse {
 
     private List<SimpleActorResponse> actors = new ArrayList<>();
 
+    private List<CommentResponse> comments = new ArrayList<>();
+
+    public List<CommentResponse> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentResponse> comments) {
+        this.comments = comments;
+    }
+
     public List<SimpleActorResponse> getActors() {
         return actors;
     }

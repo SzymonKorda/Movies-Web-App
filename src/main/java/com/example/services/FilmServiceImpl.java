@@ -5,10 +5,12 @@ import com.example.exceptions.UniqueConstraintException;
 import com.example.model.Actor;
 import com.example.model.Comment;
 import com.example.model.Film;
+import com.example.model.User;
 import com.example.payload.*;
 import com.example.repositories.ActorRepository;
 import com.example.repositories.CommentRepository;
 import com.example.repositories.FilmRepository;
+import com.example.repositories.UserRepository;
 import com.example.security.UserPrincipal;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -23,11 +26,13 @@ public class FilmServiceImpl implements FilmService {
     private FilmRepository filmRepository;
     private ActorRepository actorRepository;
     private CommentRepository commentRepository;
+    private UserRepository userRepository;
 
-    public FilmServiceImpl(FilmRepository filmRepository, ActorRepository actorRepository, CommentRepository commentRepository) {
+    public FilmServiceImpl(FilmRepository filmRepository, ActorRepository actorRepository, CommentRepository commentRepository, UserRepository userRepository) {
         this.filmRepository = filmRepository;
         this.actorRepository = actorRepository;
         this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
     }
 
     //    @Override
@@ -116,6 +121,15 @@ public class FilmServiceImpl implements FilmService {
             simpleActorResponse.setLastname(actor.getLastname());
             simpleActorResponse.setHeight(actor.getHeight());
             fullFilmResponse.getActors().add(simpleActorResponse);
+        }
+
+        for(Comment comment : film.getComments()) {
+            CommentResponse commentResponse = new CommentResponse();
+            commentResponse.setId(comment.getId());
+            commentResponse.setContent(comment.getContent());
+            User user = userRepository.findById(comment.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User", "Id", comment.getUserId()));
+            commentResponse.setUsername(user.getUsername());
+            fullFilmResponse.getComments().add(commentResponse);
         }
 
         return fullFilmResponse;
