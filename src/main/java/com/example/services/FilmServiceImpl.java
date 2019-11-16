@@ -12,9 +12,11 @@ import com.example.repositories.CommentRepository;
 import com.example.repositories.FilmRepository;
 import com.example.repositories.UserRepository;
 import com.example.security.UserPrincipal;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,8 @@ public class FilmServiceImpl implements FilmService {
     private CommentRepository commentRepository;
     private UserRepository userRepository;
 
-    public FilmServiceImpl(FilmRepository filmRepository, ActorRepository actorRepository, CommentRepository commentRepository, UserRepository userRepository) {
+    public FilmServiceImpl(FilmRepository filmRepository, ActorRepository actorRepository,
+                           CommentRepository commentRepository, UserRepository userRepository) {
         this.filmRepository = filmRepository;
         this.actorRepository = actorRepository;
         this.commentRepository = commentRepository;
@@ -56,6 +59,7 @@ public class FilmServiceImpl implements FilmService {
         return simpleFilmResponseList;
     }
 
+
     @Override
     public Film newFilm(NewFilmRequest newFilmRequest) {
 
@@ -64,20 +68,39 @@ public class FilmServiceImpl implements FilmService {
         film.setDuration(newFilmRequest.getDuration());
         film.setBoxoffice(newFilmRequest.getBoxoffice());
 
-        //musimy "odpakowac" wyjatek i dopiero potem go obsluzyc
         try {
             filmRepository.save(film);
-        } catch(RuntimeException e) {
-            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
-            if(rootCause instanceof SQLException) {
-                if("23505".equals(((SQLException) rootCause).getSQLState())) {
-                    throw new UniqueConstraintException("A film with this title exists in the database", rootCause);
-                }
-            }
+        } catch (RuntimeException ex) {
+            throw new UniqueConstraintException("Film o takim tytule istnieje w bazie");
         }
 
         return film;
     }
+
+
+
+//    @Override
+//    public Film newFilm(NewFilmRequest newFilmRequest) {
+//
+//        Film film = new Film();
+//        film.setTitle(newFilmRequest.getTitle());
+//        film.setDuration(newFilmRequest.getDuration());
+//        film.setBoxoffice(newFilmRequest.getBoxoffice());
+//
+//        //musimy "odpakowac" wyjatek i dopiero potem go obsluzyc
+//        try {
+//            filmRepository.save(film);
+//        } catch(RuntimeException e) {
+//            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
+//            if(rootCause instanceof SQLException) {
+//                if("23505".equals(((SQLException) rootCause).getSQLState())) {
+//                    throw new UniqueConstraintException("A film with this title exists in the database", rootCause);
+//                }
+//            }
+//        }
+//
+//        return film;
+//    }
 
     @Override
     public Film updateFilm(Long filmId, FilmUpdateRequest filmUpdateRequest) {

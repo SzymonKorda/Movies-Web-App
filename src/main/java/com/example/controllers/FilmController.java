@@ -22,7 +22,8 @@ public class FilmController {
     private CommentService commentService;
 
 
-    public FilmController(FilmService filmService, ActorService actorService, CommentService commentService) {
+    public FilmController(FilmService filmService, ActorService actorService,
+                          CommentService commentService) {
         this.filmService = filmService;
         this.actorService = actorService;
         this.commentService = commentService;
@@ -48,6 +49,7 @@ public class FilmController {
 //    ResponseEntity represents the whole HTTP response: status code, headers, and body.
 //    Because of it, we can use it to fully configure the HTTP response.
 //    If we want to use it, we have to return it from the endpoint;
+
     @PostMapping("/films")
     @RolesAllowed("ROLE_USER")
     public ResponseEntity<?> createFilm(@Valid @RequestBody NewFilmRequest newFilmRequest) {
