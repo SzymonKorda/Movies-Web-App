@@ -8,6 +8,16 @@ public class CommentResponse {
 
     private String content;
 
+    public CommentResponse(long id, String username, String content) {
+        this.id = id;
+        this.username = username;
+        this.content = content;
+    }
+
+
+    public CommentResponse() {
+    }
+
     public long getId() {
         return id;
     }

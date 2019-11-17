@@ -11,6 +11,15 @@ public class SimpleActorResponse {
 
     private Integer height;
 
+    public SimpleActorResponse(long id, String firstname, String lastname, Integer height) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.height = height;
+    }
+
+    public SimpleActorResponse() {
+    }
 
     public long getId() {
         return id;

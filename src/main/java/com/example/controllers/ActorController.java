@@ -2,6 +2,8 @@ package com.example.controllers;
 
 import com.example.payload.*;
 import com.example.services.ActorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +29,8 @@ public class ActorController {
     }
 
     @GetMapping("/actors")
-    public List<SimpleActorResponse> getActors() {
-        return actorService.getAllActors();
+    public Page<SimpleActorResponse> getActors(Pageable pageable) {
+        return actorService.getAllActors(pageable);
     }
 
     @GetMapping("/actors/{actorId}")

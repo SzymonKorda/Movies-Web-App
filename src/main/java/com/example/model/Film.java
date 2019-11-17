@@ -29,7 +29,7 @@ public class Film {
 
     //JOIN TABLES
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "Film_Actor",
             joinColumns = { @JoinColumn(name = "film_id")},

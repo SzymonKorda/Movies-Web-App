@@ -13,6 +13,9 @@ import com.example.repositories.FilmRepository;
 import com.example.repositories.UserRepository;
 import com.example.security.UserPrincipal;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,6 +24,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -38,26 +42,36 @@ public class FilmServiceImpl implements FilmService {
         this.userRepository = userRepository;
     }
 
-    //    @Override
-//    public Page<Film> findAllFilms(Pageable pageable) {
-//        return filmRepository.findAll(pageable);
-//    }
-
     @Override
-    public List<SimpleFilmResponse> findAllFilms() {
-        List<Film> filmList = filmRepository.findAll();
-        List<SimpleFilmResponse> simpleFilmResponseList = new ArrayList<>();
-        filmList.forEach(film -> {
-            SimpleFilmResponse simpleFilmResponse = new SimpleFilmResponse();
-            simpleFilmResponse.setId(film.getId());
-            simpleFilmResponse.setTitle(film.getTitle());
-            simpleFilmResponse.setBoxoffice(film.getBoxoffice());
-            simpleFilmResponse.setDuration(film.getDuration());
-            simpleFilmResponseList.add(simpleFilmResponse);
-        });
+    public Page<SimpleFilmResponse> findAllFilms(Pageable pageable) {
 
-        return simpleFilmResponseList;
+        Page<Film> filmsListPage = filmRepository.findAll(pageable);
+        int totalElements = (int) filmsListPage.getTotalElements();
+        return new PageImpl<>(filmsListPage
+                .stream()
+                .map(film -> new SimpleFilmResponse(
+                        film.getId(),
+                        film.getTitle(),
+                        film.getBoxoffice(),
+                        film.getDuration()))
+                .collect(Collectors.toList()), pageable, totalElements);
     }
+
+//    @Override
+//    public List<SimpleFilmResponse> findAllFilms() {
+//        List<Film> filmList = filmRepository.findAll();
+//        List<SimpleFilmResponse> simpleFilmResponseList = new ArrayList<>();
+//        filmList.forEach(film -> {
+//            SimpleFilmResponse simpleFilmResponse = new SimpleFilmResponse();
+//            simpleFilmResponse.setId(film.getId());
+//            simpleFilmResponse.setTitle(film.getTitle());
+//            simpleFilmResponse.setBoxoffice(film.getBoxoffice());
+//            simpleFilmResponse.setDuration(film.getDuration());
+//            simpleFilmResponseList.add(simpleFilmResponse);
+//        });
+//
+//        return simpleFilmResponseList;
+//    }
 
 
     @Override
@@ -149,13 +163,14 @@ public class FilmServiceImpl implements FilmService {
             CommentResponse commentResponse = new CommentResponse();
             commentResponse.setId(comment.getId());
             commentResponse.setContent(comment.getContent());
-            User user = userRepository.findById(comment.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User", "Id", comment.getUserId()));
+            User user = userRepository.findById(comment.getUser().getId()).orElseThrow(() -> new ResourceNotFoundException("User", "Id", comment.getUser().getId()));
             commentResponse.setUsername(user.getUsername());
             fullFilmResponse.getComments().add(commentResponse);
         }
 
         return fullFilmResponse;
     }
+
 
     //TODO taki sam aktor w jednym filmie (HashSet)
     @Override
@@ -175,7 +190,7 @@ public class FilmServiceImpl implements FilmService {
     public void addCommentToFilm(UserPrincipal currentUser, Long filmId, NewCommentRequest newCommentRequest) {
         Comment comment = new Comment();
         comment.setFilmId(filmId);
-        comment.setUserId(currentUser.getId());
+        comment.setUser(currentUser.getUser());
         comment.setContent(newCommentRequest.getContent());
         commentRepository.save(comment);
 

@@ -1,11 +1,14 @@
 package com.example.controllers;
 
+import com.example.model.Film;
 import com.example.payload.*;
 import com.example.security.CurrentUser;
 import com.example.security.UserPrincipal;
 import com.example.services.ActorService;
 import com.example.services.CommentService;
 import com.example.services.FilmService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,16 +32,21 @@ public class FilmController {
         this.commentService = commentService;
     }
 
-    //    @GetMapping("/films")
-//    public Page<Film> getFilms(Pageable pageable) {
-//        return filmService.findAllFilms(pageable);
-//    }
-
     @GetMapping("/films")
-    public List<SimpleFilmResponse> getFilms() {
-        return filmService.findAllFilms();
+    public Page<SimpleFilmResponse> getFilms(Pageable pageable) {
+        return filmService.findAllFilms(pageable);
     }
 
+//    @GetMapping("/films")
+//    public List<SimpleFilmResponse> getFilms() {
+//        return filmService.findAllFilms();
+//    }
+
+
+    @GetMapping("films/{filmId}/comments")
+    public Page<CommentResponse> getComments(@PathVariable Long filmId, Pageable pageable) {
+        return commentService.getByFilmId(pageable, filmId);
+    }
 
     @GetMapping("/films/{filmId}")
     public FullFilmResponse getFilm(@PathVariable Long filmId) {
@@ -83,8 +91,8 @@ public class FilmController {
         return ResponseEntity.ok(new ApiResponse(true, "Actor added to film successfully"));
     }
 
-    @PostMapping("films/{filmId}/comment")
-    @RolesAllowed("ROLE_USER")
+    @PostMapping("films/{filmId}/comments")
+    @RolesAllowed({"ROLE_USER"})
     public ResponseEntity<?> addCommentToFilm(@CurrentUser UserPrincipal currentUser, @PathVariable Long filmId, @Valid @RequestBody NewCommentRequest newCommentRequest) {
         filmService.addCommentToFilm(currentUser, filmId, newCommentRequest);
         return ResponseEntity.ok(new ApiResponse(true, "Comment added to film successfully"));

@@ -31,6 +31,10 @@ public class UserController {
     public UserProfileResponse getUserProfile(@PathVariable Long userId) {
         return userService.findUserById(userId);
     }
+//      ulubione
+//    /films/id/favourites
+
+
 
     @PostMapping("/users/{userId}/films")
     @RolesAllowed("ROLE_USER")

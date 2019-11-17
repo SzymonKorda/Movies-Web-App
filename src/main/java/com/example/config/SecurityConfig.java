@@ -58,6 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -84,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .permitAll()
                     .antMatchers("/api/auth/**")
                         .permitAll()
-                    .antMatchers(HttpMethod.GET,"/films", "/films/{filmId}", "/actors", "/actors/{actorId}")
+                    .antMatchers(HttpMethod.GET,"/films", "/films/{filmId}", "/actors", "/actors/{actorId}", "/films/{filmId}/comments")
                         .permitAll()
                     .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                         .permitAll()
@@ -93,7 +96,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                         .authenticated();
 
-
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
+
+
 }

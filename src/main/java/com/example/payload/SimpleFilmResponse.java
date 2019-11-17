@@ -12,6 +12,16 @@ public class SimpleFilmResponse {
 
     private Integer duration;
 
+    public SimpleFilmResponse() {
+    }
+
+    public SimpleFilmResponse(Long id, String title, Integer boxoffice, Integer duration) {
+        this.id = id;
+        this.title = title;
+        this.boxoffice = boxoffice;
+        this.duration = duration;
+    }
+
     public Long getId() {
         return id;
     }

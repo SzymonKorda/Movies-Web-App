@@ -1,13 +1,36 @@
 package com.example.payload;
 
+import com.example.model.User;
+
 public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";
     private Long userId;
+    private String displayName;
+    private boolean isAdmin;
 
-    public JwtAuthenticationResponse(String accessToken, Long userId) {
+    public JwtAuthenticationResponse(String accessToken, User user) {
         this.accessToken = accessToken;
-        this.userId = userId;
+        this.userId = user.getId();
+        this.displayName = user.getName();
+        this.isAdmin = true;
+    }
+
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public Long getUserId() {

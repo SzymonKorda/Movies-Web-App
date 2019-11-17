@@ -49,6 +49,15 @@ public class UserPrincipal implements UserDetails {
         );
     }
 
+    public User getUser(){
+        User user = new User();
+        user.setId(this.getId());
+        user.setUsername(this.getUsername());
+
+        return user;
+    }
+
+
     public Long getId() {
         return id;
     }

@@ -6,10 +6,14 @@ import com.example.payload.FullActorResponse;
 import com.example.payload.NewActorRequest;
 import com.example.payload.SimpleActorResponse;
 import com.example.repositories.ActorRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ActorServiceImpl implements ActorService {
@@ -30,21 +34,38 @@ public class ActorServiceImpl implements ActorService {
         return actorRepository.save(actor);
     }
 
+//    @Override
+//    public Page<SimpleActorResponse> getAllActors() {
+//
+//        List<Actor> actorsList = actorRepository.findAll();
+//        List<SimpleActorResponse> simpleActorResponseList = new ArrayList<>();
+//
+//        for(Actor actor : actorsList) {
+//            SimpleActorResponse simpleActorResponse = new SimpleActorResponse();
+//            simpleActorResponse.setId(actor.getId());
+//            simpleActorResponse.setFirstname(actor.getFirstname());
+//            simpleActorResponse.setLastname(actor.getLastname());
+//            simpleActorResponse.setHeight(actor.getHeight());
+//            simpleActorResponseList.add(simpleActorResponse);
+//        }
+//
+//        return simpleActorResponseList;
+//    }
+
+
     @Override
-    public List<SimpleActorResponse> getAllActors() {
-        List<Actor> actorsList = actorRepository.findAll();
-        List<SimpleActorResponse> simpleActorResponseList = new ArrayList<>();
+    public Page<SimpleActorResponse> getAllActors(Pageable pageable) {
 
-        for(Actor actor : actorsList) {
-            SimpleActorResponse simpleActorResponse = new SimpleActorResponse();
-            simpleActorResponse.setId(actor.getId());
-            simpleActorResponse.setFirstname(actor.getFirstname());
-            simpleActorResponse.setLastname(actor.getLastname());
-            simpleActorResponse.setHeight(actor.getHeight());
-            simpleActorResponseList.add(simpleActorResponse);
-        }
-
-        return simpleActorResponseList;
+        Page<Actor> actorsListPage = actorRepository.findAll(pageable);
+        int totalElements = (int) actorsListPage.getTotalElements();
+        return new PageImpl<>(actorsListPage
+                .stream()
+                .map(person -> new SimpleActorResponse(
+                        person.getId(),
+                        person.getFirstname(),
+                        person.getLastname(),
+                        person.getHeight()))
+                .collect(Collectors.toList()), pageable, totalElements);
     }
 
     @Override

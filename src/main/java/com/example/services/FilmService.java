@@ -11,8 +11,8 @@ import java.util.List;
 public interface FilmService {
 
 //    Film findById(Long filmId);
-//    Page<Film> findAllFilms(Pageable pageable);
-    List<SimpleFilmResponse> findAllFilms();
+    Page<SimpleFilmResponse> findAllFilms(Pageable pageable);
+//    List<SimpleFilmResponse> findAllFilms();
     void newFilm(NewFilmRequest newFilmRequest);
     Film updateFilm(Long filmId, FilmUpdateRequest filmUpdateRequest);
     void deleteFilmById(Long filmId);
