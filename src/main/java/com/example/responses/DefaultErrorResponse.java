@@ -20,3 +20,4 @@ public class DefaultErrorResponse {
         this.error = error;
     }
 }
+

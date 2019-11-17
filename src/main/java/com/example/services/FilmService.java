@@ -13,7 +13,7 @@ public interface FilmService {
 //    Film findById(Long filmId);
 //    Page<Film> findAllFilms(Pageable pageable);
     List<SimpleFilmResponse> findAllFilms();
-    Film newFilm(NewFilmRequest newFilmRequest);
+    void newFilm(NewFilmRequest newFilmRequest);
     Film updateFilm(Long filmId, FilmUpdateRequest filmUpdateRequest);
     void deleteFilmById(Long filmId);
     FullFilmResponse findFilmById(Long filmId);

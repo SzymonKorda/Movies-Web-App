@@ -3,10 +3,12 @@ package com.example.payload;
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class NewFilmRequest {
 
     @NotBlank(message = "Title is mandatory")
+    @Size(min = 3, max = 30)
     private String title;
 
     @NotNull(message = "Boxoffice is mandatory")

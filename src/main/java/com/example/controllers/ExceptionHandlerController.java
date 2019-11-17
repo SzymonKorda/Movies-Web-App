@@ -26,8 +26,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 //globalny generyczny handler dla wyjatku unique costraint
+
 @ControllerAdvice
-public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
+public class ExceptionHandlerController extends ResponseEntityExceptionHandler{
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<DefaultErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        DefaultErrorResponse errors = new DefaultErrorResponse();
+        errors.setError(String.format("%s not found with %s : '%s'",
+                ex.getResourceName(), ex.getFieldName(), ex.getFieldValue()));
+        errors.setStatus(HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    }
+
+
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(UniqueConstraintException.class)
     public ResponseEntity<DefaultErrorResponse> handleUniqueConstraintException(UniqueConstraintException exception) {
@@ -39,15 +51,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.CONFLICT);
     }
 
-    //Obsluga wyjatku dla podania blednego adresu (brak zasobu)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<DefaultErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        DefaultErrorResponse errors = new DefaultErrorResponse();
-        errors.setError(String.format("%s not found with %s : '%s'", ex.getResourceName(), ex.getFieldName(), ex.getFieldValue()));
-        errors.setStatus(HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
+
 
     //Obsluga wyjatku gdy wpiszemy /films/rt zamiast id, TODO: poprawic
     @ResponseStatus(HttpStatus.BAD_REQUEST)

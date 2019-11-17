@@ -39,10 +39,13 @@ public class FilmController {
         return filmService.findAllFilms();
     }
 
+
     @GetMapping("/films/{filmId}")
     public FullFilmResponse getFilm(@PathVariable Long filmId) {
         return filmService.findFilmById(filmId);
     }
+
+
     //@RequestBody odpowiada za to, ze jak przychodzi JSON to konwertuje go na film
     //a potem serializuje go na JSONA
     //@Valid uruchamia walidacje dla filmu (JSR-303)
@@ -50,12 +53,14 @@ public class FilmController {
 //    Because of it, we can use it to fully configure the HTTP response.
 //    If we want to use it, we have to return it from the endpoint;
 
+
     @PostMapping("/films")
-    @RolesAllowed("ROLE_USER")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<?> createFilm(@Valid @RequestBody NewFilmRequest newFilmRequest) {
         filmService.newFilm(newFilmRequest);
         return ResponseEntity.ok(new ApiResponse(true, "Film Created Successfully"));
     }
+
 
     @PutMapping("/films/{filmId}")
     @RolesAllowed("ROLE_USER")

@@ -61,7 +61,7 @@ public class FilmServiceImpl implements FilmService {
 
 
     @Override
-    public Film newFilm(NewFilmRequest newFilmRequest) {
+    public void newFilm(NewFilmRequest newFilmRequest) {
 
         Film film = new Film();
         film.setTitle(newFilmRequest.getTitle());
@@ -71,10 +71,8 @@ public class FilmServiceImpl implements FilmService {
         try {
             filmRepository.save(film);
         } catch (RuntimeException ex) {
-            throw new UniqueConstraintException("Film o takim tytule istnieje w bazie");
+            throw new UniqueConstraintException("A film with this title exists in the database");
         }
-
-        return film;
     }
 
 
@@ -124,7 +122,8 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public void deleteFilmById(Long filmId) {
-        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "id", filmId));
+        Film film = filmRepository.findById(filmId).orElseThrow(() ->
+                new ResourceNotFoundException("Film", "id", filmId));
         filmRepository.delete(film);
     }
 
