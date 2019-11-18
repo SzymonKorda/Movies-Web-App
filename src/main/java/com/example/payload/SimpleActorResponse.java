@@ -5,20 +5,23 @@ public class SimpleActorResponse {
 
     private long id;
 
-    private String firstname;
+    private String firstName;
 
-    private String lastname;
+    private String lastName;
 
     private Integer height;
 
-    public SimpleActorResponse(long id, String firstname, String lastname, Integer height) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.height = height;
-    }
+    private Integer bornYear;
 
     public SimpleActorResponse() {
+    }
+
+    public SimpleActorResponse(long id, String firstName, String lastName, Integer height, Integer bornYear) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.height = height;
+        this.bornYear = bornYear;
     }
 
     public long getId() {
@@ -29,20 +32,20 @@ public class SimpleActorResponse {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Integer getHeight() {
@@ -51,5 +54,13 @@ public class SimpleActorResponse {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public Integer getBornYear() {
+        return bornYear;
+    }
+
+    public void setBornYear(Integer bornYear) {
+        this.bornYear = bornYear;
     }
 }

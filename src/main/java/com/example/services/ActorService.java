@@ -13,4 +13,5 @@ public interface ActorService {
     Actor newActor(NewActorRequest newActorRequest);
     Page<SimpleActorResponse> getAllActors(Pageable pageable);
     FullActorResponse findActorById(Long actorId);
+    Page<SimpleActorResponse> getByFilmId(Pageable pageable, Long filmId);
 }

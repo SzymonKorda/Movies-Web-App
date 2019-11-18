@@ -14,5 +14,6 @@
 -- 'Jego rodzice rozwiedli się, gdy miał pięć lat. Wychowywał go ojciec – kucharz, który wkrótce przeniósł się z Kaliforni do Oakland. Aktorstwem Tom zainteresował się w szkole średniej.',
 --   1956,
 --   'Concord, Kalifornia, USA');
+-- INSERT INTO actor(first_name, last_name, height, description, born_year, born_place) VALUES ('Morgan', 'Freeman', 189, 'Jest jednym z najbardziej uznawanych aktorów w Hollywood, karierę zaczął od występów w musicalach.' , 1937, 'Memphis, Tennessee, USA');
 -- INSERT INTO roles(name) VALUES('ROLE_USER');
 -- INSERT INTO roles(name) VALUES('ROLE_ADMIN');

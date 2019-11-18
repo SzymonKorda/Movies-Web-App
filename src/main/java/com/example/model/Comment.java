@@ -1,13 +1,17 @@
 package com.example.model;
 
+import com.example.model.audit.DateAudit;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "comment")
-public class Comment {
+public class Comment extends DateAudit {
 
     @Id
     @Column(name = "comment_id")

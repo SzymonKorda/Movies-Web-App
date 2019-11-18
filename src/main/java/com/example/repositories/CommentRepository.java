@@ -11,5 +11,5 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    Page<Comment> findByFilmId(Pageable pageable, Long fildId);
+    Page<Comment> findByFilmId(Pageable pageable, Long filmId);
 }

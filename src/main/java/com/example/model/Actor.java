@@ -40,7 +40,7 @@ public class Actor {
     @Column(name = "height")
     private Integer height;
 
-    @ManyToMany(mappedBy = "actors")
+    @ManyToMany(mappedBy = "actors", fetch = FetchType.LAZY)
     private List<Film> films = new ArrayList<>();
 
     public Actor() {

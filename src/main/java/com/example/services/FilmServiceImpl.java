@@ -195,6 +195,7 @@ public class FilmServiceImpl implements FilmService {
         comment.setFilmId(filmId);
         comment.setUser(currentUser.getUser());
         comment.setContent(newCommentRequest.getContent());
+
         commentRepository.save(comment);
 
         Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "Id", filmId));

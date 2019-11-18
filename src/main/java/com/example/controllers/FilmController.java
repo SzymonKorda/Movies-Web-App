@@ -48,6 +48,13 @@ public class FilmController {
         return commentService.getByFilmId(pageable, filmId);
     }
 
+    @GetMapping("films/{filmId}/actors")
+    public Page<SimpleActorResponse> getActors(@PathVariable Long filmId, Pageable pageable) {
+        return actorService.getByFilmId(pageable, filmId);
+    }
+
+
+
     @GetMapping("/films/{filmId}")
     public FullFilmResponse getFilm(@PathVariable Long filmId) {
         return filmService.findFilmById(filmId);

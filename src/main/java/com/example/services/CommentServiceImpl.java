@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,13 +30,16 @@ public class CommentServiceImpl implements CommentService{
     public Page<CommentResponse> getByFilmId(Pageable pageable, Long filmId) {
        Page<Comment> commentList = commentRepository.findByFilmId(pageable, filmId);
         int totalElements = (int) commentList.getTotalElements();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
         return new PageImpl<>(commentList
                 .stream()
                 .map(comment -> new CommentResponse(
                         comment.getId(),
                         comment.getUser().getUsername(),
-                        comment.getContent()))
+                        comment.getContent(),
+                        formatter.format(Date.from(comment.getCreatedAt()))
+                ))
                 .collect(Collectors.toList()), pageable, totalElements);
 
     }

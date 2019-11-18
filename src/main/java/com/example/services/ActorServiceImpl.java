@@ -2,10 +2,12 @@ package com.example.services;
 
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.Actor;
+import com.example.model.Film;
 import com.example.payload.FullActorResponse;
 import com.example.payload.NewActorRequest;
 import com.example.payload.SimpleActorResponse;
 import com.example.repositories.ActorRepository;
+import com.example.repositories.FilmRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +21,11 @@ import java.util.stream.Collectors;
 public class ActorServiceImpl implements ActorService {
 
     private ActorRepository actorRepository;
+    private FilmRepository filmRepository;
 
-    public ActorServiceImpl(ActorRepository actorRepository) {
+    public ActorServiceImpl(ActorRepository actorRepository, FilmRepository filmRepository) {
         this.actorRepository = actorRepository;
+        this.filmRepository = filmRepository;
     }
 
     @Override
@@ -64,7 +68,8 @@ public class ActorServiceImpl implements ActorService {
                         person.getId(),
                         person.getFirstName(),
                         person.getLastName(),
-                        person.getHeight()))
+                        person.getHeight(),
+                        person.getBornYear()))
                 .collect(Collectors.toList()), pageable, totalElements);
     }
 
@@ -82,5 +87,25 @@ public class ActorServiceImpl implements ActorService {
         fullActorResponse.setBornPlace(actor.getBornPlace());
 
         return fullActorResponse;
+    }
+
+    @Override
+    public Page<SimpleActorResponse> getByFilmId(Pageable pageable, Long filmId) {
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "Id", filmId));
+        List<Actor> actors = film.getActors();
+        Page<Actor> actorPage = new PageImpl<>(actors);
+        int totalElements = (int) actorPage.getTotalElements();
+
+        return new PageImpl<>(actorPage
+                .stream()
+                .map(actor -> new SimpleActorResponse(
+                        actor.getId(),
+                        actor.getFirstName(),
+                        actor.getLastName(),
+                        actor.getHeight(),
+                        actor.getBornYear()
+                        ))
+                .collect(Collectors.toList()), pageable, totalElements);
+
     }
 }
