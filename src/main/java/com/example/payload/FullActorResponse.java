@@ -4,11 +4,20 @@ public class FullActorResponse {
 
     private long id;
 
-    private String firstname;
+    private String firstName;
 
-    private String lastname;
+    private String lastName;
+
+    private String description;
+
+    private String bornPlace;
+
+    private Integer bornYear;
 
     private Integer height;
+
+    public FullActorResponse() {
+    }
 
     public long getId() {
         return id;
@@ -18,20 +27,36 @@ public class FullActorResponse {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getBornYear() {
+        return bornYear;
+    }
+
+    public void setBornYear(Integer bornYear) {
+        this.bornYear = bornYear;
     }
 
     public Integer getHeight() {
@@ -40,5 +65,13 @@ public class FullActorResponse {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getBornPlace() {
+        return bornPlace;
+    }
+
+    public void setBornPlace(String bornPlace) {
+        this.bornPlace = bornPlace;
     }
 }

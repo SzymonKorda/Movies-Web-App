@@ -27,8 +27,8 @@ public class ActorServiceImpl implements ActorService {
     @Override
     public Actor newActor(NewActorRequest newActorRequest) {
         Actor actor = new Actor();
-        actor.setFirstname(newActorRequest.getFirstname());
-        actor.setLastname(newActorRequest.getLastname());
+        actor.setFirstName(newActorRequest.getFirstname());
+        actor.setLastName(newActorRequest.getLastname());
         actor.setHeight(newActorRequest.getHeight());
 
         return actorRepository.save(actor);
@@ -62,8 +62,8 @@ public class ActorServiceImpl implements ActorService {
                 .stream()
                 .map(person -> new SimpleActorResponse(
                         person.getId(),
-                        person.getFirstname(),
-                        person.getLastname(),
+                        person.getFirstName(),
+                        person.getLastName(),
                         person.getHeight()))
                 .collect(Collectors.toList()), pageable, totalElements);
     }
@@ -74,9 +74,12 @@ public class ActorServiceImpl implements ActorService {
         FullActorResponse fullActorResponse = new FullActorResponse();
 
         fullActorResponse.setId(actor.getId());
-        fullActorResponse.setFirstname(actor.getFirstname());
-        fullActorResponse.setLastname(actor.getLastname());
+        fullActorResponse.setFirstName(actor.getFirstName());
+        fullActorResponse.setLastName(actor.getLastName());
         fullActorResponse.setHeight(actor.getHeight());
+        fullActorResponse.setDescription(actor.getDescription());
+        fullActorResponse.setBornYear(actor.getBornYear());
+        fullActorResponse.setBornPlace(actor.getBornPlace());
 
         return fullActorResponse;
     }

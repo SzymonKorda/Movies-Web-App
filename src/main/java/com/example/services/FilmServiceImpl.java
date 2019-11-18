@@ -149,24 +149,27 @@ public class FilmServiceImpl implements FilmService {
         fullFilmResponse.setTitle(film.getTitle());
         fullFilmResponse.setBoxoffice(film.getBoxoffice());
         fullFilmResponse.setDuration(film.getDuration());
+        fullFilmResponse.setId(film.getId());
+        fullFilmResponse.setDescription(film.getDescription());
+        fullFilmResponse.setPremiereYear(film.getPremiereYear());
 
-        for(Actor actor : film.getActors()) {
-            SimpleActorResponse simpleActorResponse = new SimpleActorResponse();
-            simpleActorResponse.setId(actor.getId());
-            simpleActorResponse.setFirstname(actor.getFirstname());
-            simpleActorResponse.setLastname(actor.getLastname());
-            simpleActorResponse.setHeight(actor.getHeight());
-            fullFilmResponse.getActors().add(simpleActorResponse);
-        }
+//        for(Actor actor : film.getActors()) {
+//            SimpleActorResponse simpleActorResponse = new SimpleActorResponse();
+//            simpleActorResponse.setId(actor.getId());
+//            simpleActorResponse.setFirstname(actor.getFirstname());
+//            simpleActorResponse.setLastname(actor.getLastname());
+//            simpleActorResponse.setHeight(actor.getHeight());
+//            fullFilmResponse.getActors().add(simpleActorResponse);
+//        }
 
-        for(Comment comment : film.getComments()) {
-            CommentResponse commentResponse = new CommentResponse();
-            commentResponse.setId(comment.getId());
-            commentResponse.setContent(comment.getContent());
-            User user = userRepository.findById(comment.getUser().getId()).orElseThrow(() -> new ResourceNotFoundException("User", "Id", comment.getUser().getId()));
-            commentResponse.setUsername(user.getUsername());
-            fullFilmResponse.getComments().add(commentResponse);
-        }
+//        for(Comment comment : film.getComments()) {
+//            CommentResponse commentResponse = new CommentResponse();
+//            commentResponse.setId(comment.getId());
+//            commentResponse.setContent(comment.getContent());
+//            User user = userRepository.findById(comment.getUser().getId()).orElseThrow(() -> new ResourceNotFoundException("User", "Id", comment.getUser().getId()));
+//            commentResponse.setUsername(user.getUsername());
+//            fullFilmResponse.getComments().add(commentResponse);
+//        }
 
         return fullFilmResponse;
     }

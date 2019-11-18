@@ -57,6 +57,22 @@ public class Film {
 
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getPremiereYear() {
+        return premiereYear;
+    }
+
+    public void setPremiereYear(Integer premiereYear) {
+        this.premiereYear = premiereYear;
+    }
+
     public List<Comment> getComments() {
         return comments;
     }
