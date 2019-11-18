@@ -19,6 +19,10 @@ public class Film {
     @Column(name = "title", unique = true)
     private String title;
 
+    @NotBlank(message = "Description is mandatory")
+    @Column(name = "description")
+    private String description;
+
     @NotNull(message = "Boxoffice is mandatory")
     @Column(name = "boxoffice")
     private Integer boxoffice;
@@ -26,6 +30,11 @@ public class Film {
     @NotNull(message = "Duration is mandatory")
     @Column(name = "duration")
     private Integer duration;
+
+    @NotNull(message = "Premiere year is mandatory")
+    @Column(name = "premiere_year")
+    private Integer premiereYear;
+
 
     //JOIN TABLES
 
