@@ -105,3 +105,14 @@ public class FilmController {
         return ResponseEntity.ok(new ApiResponse(true, "Comment added to film successfully"));
     }
 }
+
+//dodawanie z selecta, aktora do filmu
+//wyszukiwanie
+///actors/choices
+//        [{
+//            'display': "tom Hasnks"
+//            'id': 2
+//        }]
+//
+//Tom - > ilike '%tom%'
+

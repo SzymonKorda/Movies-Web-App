@@ -201,4 +201,22 @@ public class FilmServiceImpl implements FilmService {
         Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "Id", filmId));
         film.getComments().add(comment);
     }
+
+    @Override
+    public Page<SimpleFilmResponse> getByActorId(Pageable pageable, Long actorId) {
+        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new ResourceNotFoundException("Actor", "Id", actorId));
+        List<Film> films = actor.getFilms();
+        Page<Film> filmPage = new PageImpl<>(films);
+        int totalElements = (int) filmPage.getTotalElements();
+
+        return new PageImpl<>(filmPage
+                .stream()
+                .map(film -> new SimpleFilmResponse(
+                        film.getId(),
+                        film.getTitle(),
+                        film.getPremiereYear(),
+                        film.getDuration()
+                ))
+                .collect(Collectors.toList()), pageable, totalElements);
+    }
 }
