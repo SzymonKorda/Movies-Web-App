@@ -52,7 +52,7 @@ public class FilmServiceImpl implements FilmService {
                 .map(film -> new SimpleFilmResponse(
                         film.getId(),
                         film.getTitle(),
-                        film.getBoxoffice(),
+                        film.getPremiereYear(),
                         film.getDuration()))
                 .collect(Collectors.toList()), pageable, totalElements);
     }

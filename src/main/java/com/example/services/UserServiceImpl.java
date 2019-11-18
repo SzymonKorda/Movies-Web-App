@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
             SimpleFilmResponse simpleFilmResponse = new SimpleFilmResponse();
             simpleFilmResponse.setId(film.getId());
             simpleFilmResponse.setTitle(film.getTitle());
-            simpleFilmResponse.setBoxoffice(film.getBoxoffice());
+//            simpleFilmResponse.setBoxoffice(film.getBoxoffice());
             simpleFilmResponse.setDuration(film.getDuration());
             userProfileResponse.getUserFilms().add(simpleFilmResponse);
         }

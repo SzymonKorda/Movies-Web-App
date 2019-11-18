@@ -8,17 +8,17 @@ public class SimpleFilmResponse {
 
     private String title;
 
-    private Integer boxoffice;
+    private Integer premiereYear;
 
     private Integer duration;
 
     public SimpleFilmResponse() {
     }
 
-    public SimpleFilmResponse(Long id, String title, Integer boxoffice, Integer duration) {
+    public SimpleFilmResponse(Long id, String title, Integer premiereYear, Integer duration) {
         this.id = id;
         this.title = title;
-        this.boxoffice = boxoffice;
+        this.premiereYear = premiereYear;
         this.duration = duration;
     }
 
@@ -38,12 +38,12 @@ public class SimpleFilmResponse {
         this.title = title;
     }
 
-    public Integer getBoxoffice() {
-        return boxoffice;
+    public Integer getPremiereYear() {
+        return premiereYear;
     }
 
-    public void setBoxoffice(Integer boxoffice) {
-        this.boxoffice = boxoffice;
+    public void setPremiereYear(Integer premiereYear) {
+        this.premiereYear = premiereYear;
     }
 
     public Integer getDuration() {
