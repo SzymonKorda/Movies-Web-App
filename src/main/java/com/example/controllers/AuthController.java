@@ -61,8 +61,8 @@ public class AuthController {
 
         String jwt = tokenProvider.generateToken(authentication);
 
-        User user = userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "Name", loginRequest.getUsernameOrEmail()));
+//        User user = userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail())
+//                .orElseThrow(() -> new ResourceNotFoundException("User", "Name", loginRequest.getUsernameOrEmail()));
 
 
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, user));
@@ -93,11 +93,7 @@ public class AuthController {
 
         User result = userRepository.save(user);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/api/users/{username}")
-                .buildAndExpand(result.getUsername()).toUri();
-
-        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+        return ResponseEntity.ok(new ApiResponse(true, "User registered successfully"));
     }
 
 }
