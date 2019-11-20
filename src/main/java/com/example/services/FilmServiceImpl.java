@@ -229,4 +229,13 @@ public class FilmServiceImpl implements FilmService {
                 ))
                 .collect(Collectors.toList()), pageable, totalElements);
     }
+
+    @Override
+    @Transactional
+    public void addFilmToUser(UserPrincipal currentUser, Long filmId) {
+        User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new ResourceNotFoundException("User", "Id", currentUser.getId()));
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "Id", filmId));
+        user.getUserFilms().add(film);
+//        film.getUsers().add(user);
+    }
 }

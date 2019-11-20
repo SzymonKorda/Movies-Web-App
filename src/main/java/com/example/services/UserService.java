@@ -2,10 +2,13 @@ package com.example.services;
 
 import com.example.payload.IdRequest;
 import com.example.payload.UserProfileResponse;
+import com.example.security.CurrentUser;
+import com.example.security.UserPrincipal;
 
 public interface UserService {
 
-    void addFilmToActor(Long filmId, IdRequest idRequest);
+//    void addFilmToUser(Long filmId, @CurrentUser UserPrincipal currentUser);
     UserProfileResponse findUserById(Long userId);
+
 
 }

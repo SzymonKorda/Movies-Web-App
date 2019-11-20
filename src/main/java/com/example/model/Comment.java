@@ -1,6 +1,8 @@
 package com.example.model;
 
 import com.example.model.audit.DateAudit;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,6 +22,7 @@ public class Comment extends DateAudit {
 
 
     @Column(name = "film_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Long filmId;
 
     @NotBlank

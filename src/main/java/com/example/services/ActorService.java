@@ -1,6 +1,7 @@
 package com.example.services;
 
 import com.example.model.Actor;
+import com.example.payload.ActorUpdateRequest;
 import com.example.payload.FullActorResponse;
 import com.example.payload.NewActorRequest;
 import com.example.payload.SimpleActorResponse;
@@ -14,4 +15,6 @@ public interface ActorService {
     Page<SimpleActorResponse> getAllActors(Pageable pageable);
     FullActorResponse findActorById(Long actorId);
     Page<SimpleActorResponse> getByFilmId(Pageable pageable, Long filmId);
+    void deleteActorById(Long actorId);
+    Actor updateActor(Long actorId, ActorUpdateRequest actorUpdateRequest);
 }

@@ -19,6 +19,7 @@ public interface FilmService {
     FullFilmResponse findFilmById(Long filmId);
     void addActorToFilm(Long filmId, IdRequest idRequest);
     void addCommentToFilm(UserPrincipal currentUser, Long filmId, NewCommentRequest newCommentRequest);
+    void addFilmToUser(UserPrincipal currentUser, Long filmId);
     Page<SimpleFilmResponse> getByActorId(Pageable pageable, Long actorId);
 
 }

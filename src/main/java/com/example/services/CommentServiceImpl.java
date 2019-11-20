@@ -1,5 +1,6 @@
 package com.example.services;
 
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.Comment;
 import com.example.model.Film;
 import com.example.payload.CommentResponse;
@@ -42,6 +43,13 @@ public class CommentServiceImpl implements CommentService{
                 ))
                 .collect(Collectors.toList()), pageable, totalElements);
 
+    }
+
+    @Override
+    public void deleteCommentById(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
+                new ResourceNotFoundException("Comment", "id", commentId));
+        commentRepository.delete(comment);
     }
 
     //    @Override

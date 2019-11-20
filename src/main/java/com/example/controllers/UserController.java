@@ -4,6 +4,7 @@ import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.User;
 import com.example.payload.ApiResponse;
 import com.example.payload.IdRequest;
+import com.example.payload.SimpleFilmResponse;
 import com.example.payload.UserProfileResponse;
 import com.example.repositories.UserRepository;
 import com.example.services.FilmService;
@@ -31,6 +32,12 @@ public class UserController {
     public UserProfileResponse getUserProfile(@PathVariable Long userId) {
         return userService.findUserById(userId);
     }
+
+    @GetMapping("/users/{userId}/films")
+    @RolesAllowed("ROLE_USER")
+    public SimpleFilmResponse getUserProfile(@PathVariable Long userId) {
+        return userService.getUserFilms(userId);
+    }
 //      ulubione
 //    /films/id/favourites
 
@@ -40,14 +47,14 @@ public class UserController {
 
 
 
-    @PostMapping("/users/{userId}/films")
-    @RolesAllowed("ROLE_USER")
-    public ResponseEntity<?> addFilmToUser(@PathVariable Long userId, @Valid @RequestBody IdRequest idRequest) {
-        userService.addFilmToActor(userId, idRequest);
-        return ResponseEntity.ok(new ApiResponse(true, "Film added to User successfully"));
-    }
+//    @PostMapping("/users/{userId}/films")
+//    @RolesAllowed("ROLE_USER")
+//    public ResponseEntity<?> addFilmToUser(@PathVariable Long , @Valid @RequestBody IdRequest idRequest) {
+//        userService.addFilmToUser(userId, idRequest);
+//        return ResponseEntity.ok(new ApiResponse(true, "Film added to User successfully"));
+//    }
 
 
-
+///films/{id}/favourites
 
 }

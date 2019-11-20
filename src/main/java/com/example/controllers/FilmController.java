@@ -77,7 +77,7 @@ public class FilmController {
     }
 
 
-    @PutMapping("/films/{filmId}")
+    @PostMapping("/films/{filmId}")
     @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<?> updateFilm(@PathVariable Long filmId, @Valid @RequestBody FilmUpdateRequest filmUpdateRequest) {
         filmService.updateFilm(filmId, filmUpdateRequest);
@@ -104,6 +104,15 @@ public class FilmController {
         filmService.addCommentToFilm(currentUser, filmId, newCommentRequest);
         return ResponseEntity.ok(new ApiResponse(true, "Comment added to film successfully"));
     }
+
+    @PostMapping("/films/{filmId}/favourites")
+    @RolesAllowed({"ROLE_USER"})
+    public ResponseEntity<?> addFilmToUser(@CurrentUser UserPrincipal currentUser, @PathVariable Long filmId) {
+        filmService.addFilmToUser(currentUser, filmId);
+        return ResponseEntity.ok(new ApiResponse(true, "Film added to user successfully"));
+    }
+
+
 }
 
 //dodawanie z selecta, aktora do filmu

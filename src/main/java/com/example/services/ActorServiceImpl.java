@@ -3,6 +3,7 @@ package com.example.services;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.Actor;
 import com.example.model.Film;
+import com.example.payload.ActorUpdateRequest;
 import com.example.payload.FullActorResponse;
 import com.example.payload.NewActorRequest;
 import com.example.payload.SimpleActorResponse;
@@ -42,7 +43,46 @@ public class ActorServiceImpl implements ActorService {
         return actorRepository.save(actor);
     }
 
-//    @Override
+    @Override
+    public void deleteActorById(Long actorId) {
+        Actor actor = actorRepository.findById(actorId).orElseThrow(() ->
+                new ResourceNotFoundException("Actor", "id", actorId));
+        actorRepository.delete(actor);
+    }
+
+    @Override
+    public Actor updateActor(Long actorId, ActorUpdateRequest actorUpdateRequest) {
+        return actorRepository.findById(actorId).map(actor -> {
+            if(!(actorUpdateRequest.getFirstName() == null)) {
+                actor.setFirstName(actorUpdateRequest.getFirstName());
+            }
+
+            if(!(actorUpdateRequest.getLastName() == null)) {
+                actor.setLastName(actorUpdateRequest.getLastName());
+            }
+
+            if(!(actorUpdateRequest.getDescription() == null)) {
+                actor.setDescription(actorUpdateRequest.getDescription());
+            }
+
+            if(!(actorUpdateRequest.getBornYear() == null)) {
+                actor.setBornYear(actorUpdateRequest.getBornYear());
+            }
+
+            if(!(actorUpdateRequest.getBornPlace() == null)) {
+                actor.setBornPlace(actorUpdateRequest.getBornPlace());
+            }
+
+            if(!(actorUpdateRequest.getHeight() == null)) {
+                actor.setHeight(actorUpdateRequest.getHeight());
+            }
+
+            return actorRepository.save(actor);
+        }).orElseThrow(() -> new ResourceNotFoundException("Actor", "id", actorId));
+    }
+
+
+    //    @Override
 //    public Page<SimpleActorResponse> getAllActors() {
 //
 //        List<Actor> actorsList = actorRepository.findAll();

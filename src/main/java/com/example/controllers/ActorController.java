@@ -29,6 +29,20 @@ public class ActorController {
         return ResponseEntity.ok(new ApiResponse(true, "Actor Created Successfully"));
     }
 
+    @DeleteMapping("/actors/{actorId}")
+    @RolesAllowed("ROLE_ADMIN")
+    public ResponseEntity<?> deleteActor(@PathVariable Long actorId) {
+        actorService.deleteActorById(actorId);
+        return ResponseEntity.ok(new ApiResponse(true, "Actor deleted successfully"));
+    }
+
+    @PostMapping("/actors/{actorId}")
+    @RolesAllowed("ROLE_ADMIN")
+    public ResponseEntity<?> updateActor(@PathVariable Long actorId, @Valid @RequestBody ActorUpdateRequest actorUpdateRequest) {
+        actorService.updateActor(actorId, actorUpdateRequest);
+        return ResponseEntity.ok(new ApiResponse(true, "Actor updated"));
+    }
+
     @GetMapping("/actors")
     public Page<SimpleActorResponse> getActors(Pageable pageable) {
         return actorService.getAllActors(pageable);
