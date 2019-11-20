@@ -1,6 +1,7 @@
 package com.example.payload;
 
 import com.example.model.User;
+import com.example.security.UserPrincipal;
 
 public class JwtAuthenticationResponse {
     private String accessToken;
@@ -9,11 +10,11 @@ public class JwtAuthenticationResponse {
     private String displayName;
     private boolean isAdmin;
 
-    public JwtAuthenticationResponse(String accessToken, User user) {
+    public JwtAuthenticationResponse(String accessToken, UserPrincipal userPrincipal) {
         this.accessToken = accessToken;
-        this.userId = user.getId();
-        this.displayName = user.getName();
-        this.isAdmin = true;
+        this.userId = userPrincipal.getId();
+        this.displayName = userPrincipal.getName();
+        this.isAdmin = userPrincipal.isAdmin();
     }
 
 

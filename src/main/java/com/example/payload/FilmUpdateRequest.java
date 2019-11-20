@@ -8,6 +8,26 @@ public class FilmUpdateRequest {
 
     private Integer duration;
 
+    private String description;
+
+    private Integer premiereYear;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getPremiereYear() {
+        return premiereYear;
+    }
+
+    public void setPremiereYear(Integer premiereYear) {
+        this.premiereYear = premiereYear;
+    }
+
     public String getTitle() {
         return title;
     }

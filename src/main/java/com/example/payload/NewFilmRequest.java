@@ -11,11 +11,17 @@ public class NewFilmRequest {
     @Size(min = 3, max = 30)
     private String title;
 
+    @NotBlank(message = "Description is mandatory")
+    private String description;
+
     @NotNull(message = "Boxoffice is mandatory")
     private Integer boxoffice;
 
     @NotNull(message = "Duration is mandatory")
     private Integer duration;
+
+    @NotNull(message = "Premiere year is mandatory")
+    private Integer premiereYear;
 
     public String getTitle() {
         return title;
@@ -39,5 +45,21 @@ public class NewFilmRequest {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public Integer getPremiereYear() {
+        return premiereYear;
+    }
+
+    public void setPremiereYear(Integer premiereYear) {
+        this.premiereYear = premiereYear;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

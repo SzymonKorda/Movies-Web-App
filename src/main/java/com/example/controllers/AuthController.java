@@ -12,6 +12,7 @@ import com.example.payload.SignUpRequest;
 import com.example.repositories.RoleRepository;
 import com.example.repositories.UserRepository;
 import com.example.security.JwtTokenProvider;
+import com.example.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -59,13 +60,11 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
         String jwt = tokenProvider.generateToken(authentication);
 
-//        User user = userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail())
-//                .orElseThrow(() -> new ResourceNotFoundException("User", "Name", loginRequest.getUsernameOrEmail()));
-
-
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, user));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, userPrincipal));
     }
 
     @PostMapping("/signup")

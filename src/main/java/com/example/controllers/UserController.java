@@ -34,6 +34,10 @@ public class UserController {
 //      ulubione
 //    /films/id/favourites
 
+//    @PostMapping("films/{filmId}/favourites")
+//    @RolesAllowed("ROLE_USER")
+//    public
+
 
 
     @PostMapping("/users/{userId}/films")

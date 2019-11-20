@@ -79,8 +79,10 @@ public class FilmServiceImpl implements FilmService {
 
         Film film = new Film();
         film.setTitle(newFilmRequest.getTitle());
+        film.setDescription(newFilmRequest.getDescription());
         film.setDuration(newFilmRequest.getDuration());
         film.setBoxoffice(newFilmRequest.getBoxoffice());
+        film.setPremiereYear(newFilmRequest.getPremiereYear());
 
         try {
             filmRepository.save(film);
@@ -128,6 +130,14 @@ public class FilmServiceImpl implements FilmService {
 
             if(!(filmUpdateRequest.getDuration() == null)) {
                 film.setDuration(filmUpdateRequest.getDuration());
+            }
+
+            if(!(filmUpdateRequest.getDescription() == null)) {
+                film.setDescription(filmUpdateRequest.getDescription());
+            }
+
+            if(!(filmUpdateRequest.getPremiereYear() == null)) {
+                film.setPremiereYear(filmUpdateRequest.getPremiereYear());
             }
 
             return filmRepository.save(film);

@@ -23,21 +23,32 @@ public class UserPrincipal implements UserDetails {
     @JsonIgnore
     private String password;
 
+    private boolean isAdmin;
+
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String name, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String name, String username, String email, String password, boolean isAdmin, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.isAdmin = isAdmin;
         this.authorities = authorities;
     }
 
     public static UserPrincipal create(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getName().name())
-        ).collect(Collectors.toList());
+            List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
+                    new SimpleGrantedAuthority(role.getName().name())
+            ).collect(Collectors.toList());
+
+            boolean adminFlag;
+            String role = authorities.get(0).getAuthority();
+            if(role.equals("ROLE_ADMIN")) {
+                adminFlag = true;
+            } else {
+                adminFlag = false;
+            }
 
         return new UserPrincipal(
                 user.getId(),
@@ -45,6 +56,7 @@ public class UserPrincipal implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
+                adminFlag,
                 authorities
         );
     }
@@ -92,6 +104,14 @@ public class UserPrincipal implements UserDetails {
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     @Override

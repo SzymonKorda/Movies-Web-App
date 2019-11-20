@@ -23,7 +23,7 @@ public class ActorController {
     }
 
     @PostMapping("/actors")
-    @RolesAllowed("ROLE_USER")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<?> createActor(@Valid @RequestBody NewActorRequest newActorRequest) {
         actorService.newActor(newActorRequest);
         return ResponseEntity.ok(new ApiResponse(true, "Actor Created Successfully"));

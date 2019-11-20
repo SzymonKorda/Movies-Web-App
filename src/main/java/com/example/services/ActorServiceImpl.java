@@ -31,9 +31,13 @@ public class ActorServiceImpl implements ActorService {
     @Override
     public Actor newActor(NewActorRequest newActorRequest) {
         Actor actor = new Actor();
-        actor.setFirstName(newActorRequest.getFirstname());
-        actor.setLastName(newActorRequest.getLastname());
+
+        actor.setFirstName(newActorRequest.getFirstName());
+        actor.setLastName(newActorRequest.getLastName());
         actor.setHeight(newActorRequest.getHeight());
+        actor.setBornYear(newActorRequest.getBornYear());
+        actor.setDescription(newActorRequest.getDescription());
+        actor.setBornPlace(newActorRequest.getBornPlace());
 
         return actorRepository.save(actor);
     }
