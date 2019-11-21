@@ -185,6 +185,7 @@ public class ActorServiceImpl implements ActorService {
         }
 
 
+
         Page<Actor> actorsListPage = actorRepository.findAll(pageable);
         int totalElements = (int) actorsListPage.getTotalElements();
         return new PageImpl<>(actorsListPage
