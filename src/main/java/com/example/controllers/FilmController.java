@@ -91,10 +91,10 @@ public class FilmController {
         return ResponseEntity.ok(new ApiResponse(true, "Film deleted successfully"));
     }
 
-    @PostMapping("films/{filmId}/actors")
+    @PostMapping("films/{filmId}/actors/{actorId}")
     @RolesAllowed("ROLE_ADMIN")
-    public ResponseEntity<?> addActorToFilm(@PathVariable Long filmId, @Valid @RequestBody IdRequest idRequest) {
-        filmService.addActorToFilm(filmId, idRequest);
+    public ResponseEntity<?> addActorToFilm(@PathVariable Long filmId, @PathVariable Long actorId) {
+        filmService.addActorToFilm(filmId, actorId);
         return ResponseEntity.ok(new ApiResponse(true, "Actor added to film successfully"));
     }
 

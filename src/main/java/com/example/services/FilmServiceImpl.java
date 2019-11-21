@@ -188,13 +188,10 @@ public class FilmServiceImpl implements FilmService {
     //TODO taki sam aktor w jednym filmie (HashSet)
     @Override
     @Transactional
-    public void addActorToFilm(Long filmId, IdRequest idRequest) {
+    public void addActorToFilm(Long filmId, Long actorId) {
         Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "id", filmId));
-        Actor actor = actorRepository.findById(idRequest.getId()).orElseThrow(() -> new ResourceNotFoundException("Actor", "id", idRequest.getId()));
+        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new ResourceNotFoundException("Actor", "id", actorId));
         film.getActors().add(actor);
-        actor.getFilms().add(film);
-
-        film.setActors(film.getActors());
     }
 
 
