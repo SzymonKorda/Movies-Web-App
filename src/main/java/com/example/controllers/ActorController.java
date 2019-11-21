@@ -72,4 +72,13 @@ public class ActorController {
         return ResponseEntity.ok(new ApiResponse(true, "Actor's films deleted successfully"));
     }
 
+    @GetMapping("/actors/choices")
+    public Page<ActorChoiceResponse> getActorsChoices(Pageable pageable, @RequestParam(defaultValue = "0") Integer pageNo,
+                                                      @RequestParam(defaultValue = "15") Integer pageSize,
+                                                      @RequestParam(defaultValue = "lastName") String sortBy,
+                                                      @RequestParam(defaultValue = "asc") String order) {
+
+        return actorService.getActorsChoices(pageable, pageNo, pageSize, sortBy, order);
+    }
+
 }

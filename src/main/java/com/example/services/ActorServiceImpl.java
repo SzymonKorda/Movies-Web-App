@@ -3,15 +3,10 @@ package com.example.services;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.Actor;
 import com.example.model.Film;
-import com.example.payload.ActorUpdateRequest;
-import com.example.payload.FullActorResponse;
-import com.example.payload.NewActorRequest;
-import com.example.payload.SimpleActorResponse;
+import com.example.payload.*;
 import com.example.repositories.ActorRepository;
 import com.example.repositories.FilmRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -107,6 +102,8 @@ public class ActorServiceImpl implements ActorService {
 
         Page<Actor> actorsListPage = actorRepository.findAll(pageable);
         int totalElements = (int) actorsListPage.getTotalElements();
+
+
         return new PageImpl<>(actorsListPage
                 .stream()
                 .map(person -> new SimpleActorResponse(
@@ -176,5 +173,26 @@ public class ActorServiceImpl implements ActorService {
                 break;
             }
         }
+    }
+
+    @Override
+    public Page<ActorChoiceResponse> getActorsChoices(Pageable pageable, Integer pageNo, Integer pageSize, String sortBy, String order) {
+
+        if(order.equals("asc")) {
+            pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
+        } else {
+            pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        }
+
+
+        Page<Actor> actorsListPage = actorRepository.findAll(pageable);
+        int totalElements = (int) actorsListPage.getTotalElements();
+        return new PageImpl<>(actorsListPage
+                .stream()
+                .map(actor -> new ActorChoiceResponse(
+                        actor.getId(),
+                        actor.getFirstName(),
+                        actor.getLastName()))
+                .collect(Collectors.toList()), pageable, totalElements);
     }
 }

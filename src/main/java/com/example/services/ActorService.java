@@ -1,10 +1,7 @@
 package com.example.services;
 
 import com.example.model.Actor;
-import com.example.payload.ActorUpdateRequest;
-import com.example.payload.FullActorResponse;
-import com.example.payload.NewActorRequest;
-import com.example.payload.SimpleActorResponse;
+import com.example.payload.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,4 +16,5 @@ public interface ActorService {
     Actor updateActor(Long actorId, ActorUpdateRequest actorUpdateRequest);
     void addFilmToActor(Long actorId, Long filmId);
     void deleteActorFilm(Long actorId, Long filmId);
+    Page<ActorChoiceResponse> getActorsChoices(Pageable pageable, Integer pageNo, Integer pageSize, String sortBy, String order);
 }
