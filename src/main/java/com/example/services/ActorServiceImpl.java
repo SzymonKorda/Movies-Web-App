@@ -1,18 +1,25 @@
 package com.example.services;
 
+import com.example.bootstrap.ActorSpecification;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.Actor;
 import com.example.model.Film;
 import com.example.payload.*;
 import com.example.repositories.ActorRepository;
 import com.example.repositories.FilmRepository;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+
 
 @Service
 public class ActorServiceImpl implements ActorService {
@@ -176,7 +183,7 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public Page<ActorChoiceResponse> getActorsChoices(Pageable pageable, Integer pageNo, Integer pageSize, String sortBy, String order) {
+    public Page<ActorChoiceResponse> getActorsChoices(ActorSpecification actorSpecification, Pageable pageable, Integer pageNo, Integer pageSize, String sortBy, String order) {
 
         if(order.equals("asc")) {
             pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
@@ -185,8 +192,7 @@ public class ActorServiceImpl implements ActorService {
         }
 
 
-
-        Page<Actor> actorsListPage = actorRepository.findAll(pageable);
+        Page<Actor> actorsListPage = actorRepository.findAll(actorSpecification, pageable);
         int totalElements = (int) actorsListPage.getTotalElements();
         return new PageImpl<>(actorsListPage
                 .stream()

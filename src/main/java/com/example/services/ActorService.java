@@ -1,5 +1,5 @@
 package com.example.services;
-
+import com.example.bootstrap.ActorSpecification;
 import com.example.model.Actor;
 import com.example.payload.*;
 import org.springframework.data.domain.Page;
@@ -16,5 +16,5 @@ public interface ActorService {
     Actor updateActor(Long actorId, ActorUpdateRequest actorUpdateRequest);
     void addFilmToActor(Long actorId, Long filmId);
     void deleteActorFilm(Long actorId, Long filmId);
-    Page<ActorChoiceResponse> getActorsChoices(Pageable pageable, Integer pageNo, Integer pageSize, String sortBy, String order);
+    Page<ActorChoiceResponse> getActorsChoices(ActorSpecification actorSpecification, Pageable pageable, Integer pageNo, Integer pageSize, String sortBy, String order);
 }
