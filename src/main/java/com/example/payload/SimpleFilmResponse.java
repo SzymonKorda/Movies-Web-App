@@ -54,8 +54,8 @@ public class SimpleFilmResponse {
         this.duration = duration;
     }
 }
-// usuwanie filmu usera
-//lista filmow usera
+// usuwanie filmu usera "/users/{userId}/films/{filmId}"
+//lista filmow usera v "/users/{userId}/films"
 //dodawanie filmu do aktora
 // aktora do filmu
 //usuwanie aktora z filmu

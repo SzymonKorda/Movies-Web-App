@@ -1,20 +1,15 @@
 package com.example.controllers;
 
-import com.example.exceptions.ResourceNotFoundException;
-import com.example.model.User;
 import com.example.payload.ApiResponse;
-import com.example.payload.IdRequest;
 import com.example.payload.SimpleFilmResponse;
 import com.example.payload.UserProfileResponse;
-import com.example.repositories.UserRepository;
 import com.example.services.FilmService;
 import com.example.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
 
 @RestController
 public class UserController {
@@ -35,9 +30,17 @@ public class UserController {
 
     @GetMapping("/users/{userId}/films")
     @RolesAllowed("ROLE_USER")
-    public SimpleFilmResponse getUserProfile(@PathVariable Long userId) {
-        return userService.getUserFilms(userId);
+    public Page<SimpleFilmResponse> getUserFilms(Pageable pageable, @PathVariable Long userId) {
+        return userService.getUserFilms(pageable, userId);
     }
+
+    @DeleteMapping("users/{userId}/films/{filmId}")
+    @RolesAllowed("ROLE_USER")
+    public ResponseEntity<?> deleteUserFilm(@PathVariable Long userId, @PathVariable Long filmId) {
+        userService.deleteUserFilmById(filmId, userId);
+        return ResponseEntity.ok(new ApiResponse(true, "User's film deleted successfully"));
+    }
+
 //      ulubione
 //    /films/id/favourites
 
