@@ -58,4 +58,18 @@ public class ActorController {
         return filmService.getByActorId(pageable, actorId);
     }
 
+    @PostMapping("/actors/{actorId}/films/{filmId}")
+    @RolesAllowed("ROLE_ADMIN")
+    public ResponseEntity<?> addFilmToActor(@PathVariable Long actorId, @PathVariable Long filmId ) {
+        actorService.addFilmToActor(actorId, filmId);
+        return ResponseEntity.ok(new ApiResponse(true, "Film added to actor successfully"));
+    }
+
+    @DeleteMapping("/actors/{actorId}/films/{filmId}")
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
+    public ResponseEntity<?> deleteFilmActor(@PathVariable Long actorId, @PathVariable Long filmId) {
+        actorService.deleteActorFilm(actorId, filmId);
+        return ResponseEntity.ok(new ApiResponse(true, "Actor's films deleted successfully"));
+    }
+
 }

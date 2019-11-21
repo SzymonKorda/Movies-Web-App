@@ -56,7 +56,7 @@ public class SimpleFilmResponse {
 }
 // usuwanie filmu usera "/users/{userId}/films/{filmId}"
 //lista filmow usera v "/users/{userId}/films"
-//dodawanie filmu do aktora
-// aktora do filmu
-//usuwanie aktora z filmu
-//usuwanie filmu z aktora
+//dodawanie filmu do aktora v /actors/{actorId}/films/{filmId}
+// aktora do filmu v films/{filmId}/actors/{actorId}
+//usuwanie aktora z filmu v /films/{filmId}/actors/{actorId}
+//usuwanie filmu z aktora v /actors/{actorId}/films/{filmId}

@@ -106,10 +106,17 @@ public class FilmController {
     }
 
     @PostMapping("/films/{filmId}/favourites")
-    @RolesAllowed({"ROLE_USER"})
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<?> addFilmToUser(@CurrentUser UserPrincipal currentUser, @PathVariable Long filmId) {
         filmService.addFilmToUser(currentUser, filmId);
         return ResponseEntity.ok(new ApiResponse(true, "Film added to user successfully"));
+    }
+
+    @DeleteMapping("/films/{filmId}/actors/{actorId}")
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
+    public ResponseEntity<?> deleteActorFilm(@PathVariable Long filmId, @PathVariable Long actorId) {
+        filmService.deleteActorFilm(filmId, actorId);
+        return ResponseEntity.ok(new ApiResponse(true, "Film's actor deleted successfully"));
     }
 
 

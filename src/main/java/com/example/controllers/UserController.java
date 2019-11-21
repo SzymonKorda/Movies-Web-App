@@ -29,13 +29,13 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}/films")
-    @RolesAllowed("ROLE_USER")
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public Page<SimpleFilmResponse> getUserFilms(Pageable pageable, @PathVariable Long userId) {
         return userService.getUserFilms(pageable, userId);
     }
 
     @DeleteMapping("users/{userId}/films/{filmId}")
-    @RolesAllowed("ROLE_USER")
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<?> deleteUserFilm(@PathVariable Long userId, @PathVariable Long filmId) {
         userService.deleteUserFilmById(filmId, userId);
         return ResponseEntity.ok(new ApiResponse(true, "User's film deleted successfully"));

@@ -235,4 +235,17 @@ public class FilmServiceImpl implements FilmService {
         user.getUserFilms().add(film);
 //        film.getUsers().add(user);
     }
+
+    @Override
+    @Transactional
+    public void deleteActorFilm(Long filmId, Long actorId) {
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "Id", filmId));
+        List<Actor> actors = film.getActors();
+        for (Actor actor : actors) {
+            if(actor.getId() == actorId) {
+                actors.remove(actor);
+                break;
+            }
+        }
+    }
 }

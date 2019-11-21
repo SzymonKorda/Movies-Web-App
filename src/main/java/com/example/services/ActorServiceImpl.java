@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -151,5 +152,29 @@ public class ActorServiceImpl implements ActorService {
                         ))
                 .collect(Collectors.toList()), pageable, totalElements);
 
+    }
+
+    @Override
+    @Transactional
+    public void addFilmToActor(Long actorId, Long filmId) {
+        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new ResourceNotFoundException("Actor", "id", actorId));
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "id", filmId));
+        actor.getFilms().add(film);
+        film.getActors().add(actor);
+    }
+
+    @Override
+    @Transactional
+    public void deleteActorFilm(Long actorId, Long filmId) {
+        Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new ResourceNotFoundException("Actor", "Id", actorId));
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "Id", filmId));
+        List<Film> films = actor.getFilms();
+        for (Film film1 : films) {
+            if(film1.getId() == filmId) {
+                films.remove(film1);
+                film.getActors().remove(actor);
+                break;
+            }
+        }
     }
 }
