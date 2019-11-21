@@ -16,5 +16,5 @@ public interface ActorService {
     Actor updateActor(Long actorId, ActorUpdateRequest actorUpdateRequest);
     void addFilmToActor(Long actorId, Long filmId);
     void deleteActorFilm(Long actorId, Long filmId);
-    Page<ActorChoiceResponse> getActorsChoices(ActorSpecification actorSpecification, Pageable pageable, Integer pageNo, Integer pageSize, String sortBy, String order);
+    Page<ActorChoiceResponse> getActorsChoices(ActorSpecification actorSpecification, Pageable pageable);
 }

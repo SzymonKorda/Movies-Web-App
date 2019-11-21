@@ -183,13 +183,13 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public Page<ActorChoiceResponse> getActorsChoices(ActorSpecification actorSpecification, Pageable pageable, Integer pageNo, Integer pageSize, String sortBy, String order) {
+    public Page<ActorChoiceResponse> getActorsChoices(ActorSpecification actorSpecification, Pageable pageable) {
 
-        if(order.equals("asc")) {
-            pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
-        } else {
-            pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
-        }
+//        if(order.equals("asc")) {
+//            pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
+//        } else {
+//            pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+//        }
 
 
         Page<Actor> actorsListPage = actorRepository.findAll(actorSpecification, pageable);

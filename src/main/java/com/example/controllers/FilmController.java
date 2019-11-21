@@ -99,7 +99,7 @@ public class FilmController {
     }
 
     @PostMapping("films/{filmId}/comments")
-    @RolesAllowed({"ROLE_USER"})
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<?> addCommentToFilm(@CurrentUser UserPrincipal currentUser, @PathVariable Long filmId, @Valid @RequestBody NewCommentRequest newCommentRequest) {
         filmService.addCommentToFilm(currentUser, filmId, newCommentRequest);
         return ResponseEntity.ok(new ApiResponse(true, "Comment added to film successfully"));
