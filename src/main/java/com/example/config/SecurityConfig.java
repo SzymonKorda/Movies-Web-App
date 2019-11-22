@@ -85,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .permitAll()
                     .antMatchers("/api/auth/**")
                         .permitAll()
-                    .antMatchers(HttpMethod.GET,"/films", "/films/{filmId}", "/actors", "/actors/{actorId}", "/films/{filmId}/comments", "/films/{filmId}/actors", "/actors/{actorId}/films", "/actors/choices")
+                    .antMatchers(HttpMethod.GET,"/films", "/films/{filmId}", "/actors", "/actors/{actorId}", "/films/{filmId}/comments", "/films/{filmId}/actors", "/actors/{actorId}/films", "/actors/choices", "/films/choices")
                         .permitAll()
                 .anyRequest()
                         .authenticated();

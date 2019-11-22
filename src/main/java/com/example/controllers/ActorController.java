@@ -50,8 +50,8 @@ public class ActorController {
     }
 
     @GetMapping("/actors")
-    public Page<SimpleActorResponse> getActors(Pageable pageable) {
-        return actorService.getAllActors(pageable);
+    public Page<SimpleActorResponse> getActors(ActorSpecification actorSpecification, Pageable pageable) {
+        return actorService.getAllActors(actorSpecification, pageable);
     }
 
     @GetMapping("/actors/{actorId}")
@@ -82,7 +82,6 @@ public class ActorController {
 
     @GetMapping("/actors/choices")
     public Page<ActorChoiceResponse> getActorsChoices(ActorSpecification actorSpecification, Pageable pageable) {
-
         return actorService.getActorsChoices(actorSpecification, pageable);
     }
 

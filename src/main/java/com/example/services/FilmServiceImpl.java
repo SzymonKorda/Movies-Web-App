@@ -1,5 +1,6 @@
 package com.example.services;
 
+import com.example.bootstrap.FilmSpecification;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.exceptions.UniqueConstraintException;
 import com.example.model.Actor;
@@ -247,5 +248,17 @@ public class FilmServiceImpl implements FilmService {
                 break;
             }
         }
+    }
+
+    @Override
+    public Page<FilmChoiceResponse> getFilmsChoices(FilmSpecification filmSpecification, Pageable pageable) {
+        Page<Film> filmsListPage = filmRepository.findAll(filmSpecification, pageable);
+        int totalElements = (int) filmsListPage.getTotalElements();
+        return new PageImpl<>(filmsListPage
+                .stream()
+                .map(film -> new FilmChoiceResponse(
+                        film.getId(),
+                        film.getTitle()))
+                .collect(Collectors.toList()), pageable, totalElements);
     }
 }

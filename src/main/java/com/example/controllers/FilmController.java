@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.bootstrap.FilmSpecification;
 import com.example.model.Film;
 import com.example.payload.*;
 import com.example.security.CurrentUser;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 public class FilmController {
@@ -117,6 +117,11 @@ public class FilmController {
     public ResponseEntity<?> deleteActorFilm(@PathVariable Long filmId, @PathVariable Long actorId) {
         filmService.deleteActorFilm(filmId, actorId);
         return ResponseEntity.ok(new ApiResponse(true, "Film's actor deleted successfully"));
+    }
+
+    @GetMapping("/films/choices")
+    public Page<FilmChoiceResponse> getFilmsChoices(FilmSpecification filmSpecification, Pageable pageable) {
+        return filmService.getFilmsChoices(filmSpecification, pageable);
     }
 
 

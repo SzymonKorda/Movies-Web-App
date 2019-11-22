@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ActorService {
     Actor newActor(NewActorRequest newActorRequest);
-    Page<SimpleActorResponse> getAllActors(Pageable pageable);
+    Page<SimpleActorResponse> getAllActors(ActorSpecification actorSpecification, Pageable pageable);
     FullActorResponse findActorById(Long actorId);
     Page<SimpleActorResponse> getByFilmId(Pageable pageable, Long filmId);
     void deleteActorById(Long actorId);

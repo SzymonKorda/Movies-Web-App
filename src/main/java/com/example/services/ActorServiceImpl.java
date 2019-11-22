@@ -105,9 +105,9 @@ public class ActorServiceImpl implements ActorService {
 
 
     @Override
-    public Page<SimpleActorResponse> getAllActors(Pageable pageable) {
+    public Page<SimpleActorResponse> getAllActors(ActorSpecification actorSpecification, Pageable pageable) {
 
-        Page<Actor> actorsListPage = actorRepository.findAll(pageable);
+        Page<Actor> actorsListPage = actorRepository.findAll(actorSpecification, pageable);
         int totalElements = (int) actorsListPage.getTotalElements();
 
 

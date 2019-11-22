@@ -1,5 +1,6 @@
 package com.example.services;
 
+import com.example.bootstrap.FilmSpecification;
 import com.example.model.Film;
 import com.example.payload.*;
 import com.example.security.UserPrincipal;
@@ -22,4 +23,6 @@ public interface FilmService {
     void addFilmToUser(UserPrincipal currentUser, Long filmId);
     Page<SimpleFilmResponse> getByActorId(Pageable pageable, Long actorId);
     void deleteActorFilm(Long filmId, Long actorId);
+    Page<FilmChoiceResponse> getFilmsChoices(FilmSpecification filmSpecification, Pageable pageable);
+
 }
