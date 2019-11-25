@@ -1,14 +1,11 @@
 package com.example.services;
 
+import com.example.specification.FilmSpecification;
 import com.example.exceptions.ResourceNotFoundException;
-import com.example.model.Actor;
 import com.example.model.Film;
 import com.example.model.User;
-import com.example.payload.IdRequest;
-import com.example.payload.SimpleActorResponse;
 import com.example.payload.SimpleFilmResponse;
 import com.example.payload.UserProfileResponse;
-import com.example.repositories.CommentRepository;
 import com.example.repositories.FilmRepository;
 import com.example.repositories.UserRepository;
 import org.springframework.data.domain.Page;
@@ -63,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<SimpleFilmResponse> getUserFilms(Pageable pageable, Long userId) {
+    public Page<SimpleFilmResponse> getUserFilms(FilmSpecification filmSpecification, Pageable pageable, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
         List<Film> films = user.getUserFilms();
         Page<Film> filmPage = new PageImpl<>(films);

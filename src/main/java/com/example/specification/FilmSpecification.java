@@ -1,4 +1,4 @@
-package com.example.bootstrap;
+package com.example.specification;
 
 import com.example.model.Film;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;

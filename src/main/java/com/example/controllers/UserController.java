@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.specification.FilmSpecification;
 import com.example.payload.ApiResponse;
 import com.example.payload.SimpleFilmResponse;
 import com.example.payload.UserProfileResponse;
@@ -30,8 +31,8 @@ public class UserController {
 
     @GetMapping("/users/{userId}/films")
     @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
-    public Page<SimpleFilmResponse> getUserFilms(Pageable pageable, @PathVariable Long userId) {
-        return userService.getUserFilms(pageable, userId);
+    public Page<SimpleFilmResponse> getUserFilms(FilmSpecification filmSpecification, Pageable pageable, @PathVariable Long userId) {
+        return userService.getUserFilms(filmSpecification, pageable, userId);
     }
 
     @DeleteMapping("users/{userId}/films/{filmId}")

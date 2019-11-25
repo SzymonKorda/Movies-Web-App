@@ -1,7 +1,6 @@
 package com.example.controllers;
 
-import com.example.bootstrap.FilmSpecification;
-import com.example.model.Film;
+import com.example.specification.FilmSpecification;
 import com.example.payload.*;
 import com.example.security.CurrentUser;
 import com.example.security.UserPrincipal;
@@ -33,8 +32,8 @@ public class FilmController {
     }
 
     @GetMapping("/films")
-    public Page<SimpleFilmResponse> getFilms(Pageable pageable) {
-        return filmService.findAllFilms(pageable);
+    public Page<SimpleFilmResponse> getFilms(FilmSpecification filmSpecification, Pageable pageable) {
+        return filmService.findAllFilms(filmSpecification, pageable);
     }
 
 //    @GetMapping("/films")

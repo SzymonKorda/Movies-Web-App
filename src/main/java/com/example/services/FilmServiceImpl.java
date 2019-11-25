@@ -1,6 +1,6 @@
 package com.example.services;
 
-import com.example.bootstrap.FilmSpecification;
+import com.example.specification.FilmSpecification;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.exceptions.UniqueConstraintException;
 import com.example.model.Actor;
@@ -13,18 +13,13 @@ import com.example.repositories.CommentRepository;
 import com.example.repositories.FilmRepository;
 import com.example.repositories.UserRepository;
 import com.example.security.UserPrincipal;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,9 +39,9 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Page<SimpleFilmResponse> findAllFilms(Pageable pageable) {
+    public Page<SimpleFilmResponse> findAllFilms(FilmSpecification filmSpecification, Pageable pageable) {
 
-        Page<Film> filmsListPage = filmRepository.findAll(pageable);
+        Page<Film> filmsListPage = filmRepository.findAll(filmSpecification, pageable);
         int totalElements = (int) filmsListPage.getTotalElements();
         return new PageImpl<>(filmsListPage
                 .stream()

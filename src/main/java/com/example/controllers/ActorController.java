@@ -1,16 +1,11 @@
 package com.example.controllers;
 
-import com.example.bootstrap.ActorSpecification;
-import com.example.model.Actor;
+import com.example.specification.ActorSpecification;
 import com.example.payload.*;
 import com.example.services.ActorService;
 import com.example.services.FilmService;
-import net.kaczmarzyk.spring.data.jpa.domain.Like;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

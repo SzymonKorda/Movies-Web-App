@@ -1,21 +1,16 @@
 package com.example.services;
 
-import com.example.bootstrap.ActorSpecification;
+import com.example.specification.ActorSpecification;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.model.Actor;
 import com.example.model.Film;
 import com.example.payload.*;
 import com.example.repositories.ActorRepository;
 import com.example.repositories.FilmRepository;
-import net.kaczmarzyk.spring.data.jpa.domain.Like;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.data.domain.*;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
