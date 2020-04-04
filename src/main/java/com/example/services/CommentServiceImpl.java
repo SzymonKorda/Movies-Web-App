@@ -52,13 +52,4 @@ public class CommentServiceImpl implements CommentService{
         commentRepository.delete(comment);
     }
 
-    //    @Override
-//    public Comment newComment(Long filmId, UserPrincipal currentUser, NewCommentRequest newCommentRequest) {
-//        Comment comment = new Comment();
-//        comment.setFilmId(newCommentRequest.getFilmId());
-//        comment.setUserId(currentUser.getId());
-//        comment.setContent(newCommentRequest.getContent());
-//
-//        commentRepository.save(comment);
-//    }
 }

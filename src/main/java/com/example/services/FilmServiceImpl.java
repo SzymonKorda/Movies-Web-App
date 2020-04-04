@@ -53,22 +53,6 @@ public class FilmServiceImpl implements FilmService {
                 .collect(Collectors.toList()), pageable, totalElements);
     }
 
-//    @Override
-//    public List<SimpleFilmResponse> findAllFilms() {
-//        List<Film> filmList = filmRepository.findAll();
-//        List<SimpleFilmResponse> simpleFilmResponseList = new ArrayList<>();
-//        filmList.forEach(film -> {
-//            SimpleFilmResponse simpleFilmResponse = new SimpleFilmResponse();
-//            simpleFilmResponse.setId(film.getId());
-//            simpleFilmResponse.setTitle(film.getTitle());
-//            simpleFilmResponse.setBoxoffice(film.getBoxoffice());
-//            simpleFilmResponse.setDuration(film.getDuration());
-//            simpleFilmResponseList.add(simpleFilmResponse);
-//        });
-//
-//        return simpleFilmResponseList;
-//    }
-
 
     @Override
     public void newFilm(NewFilmRequest newFilmRequest) {
@@ -88,29 +72,6 @@ public class FilmServiceImpl implements FilmService {
     }
 
 
-
-//    @Override
-//    public Film newFilm(NewFilmRequest newFilmRequest) {
-//
-//        Film film = new Film();
-//        film.setTitle(newFilmRequest.getTitle());
-//        film.setDuration(newFilmRequest.getDuration());
-//        film.setBoxoffice(newFilmRequest.getBoxoffice());
-//
-//        //musimy "odpakowac" wyjatek i dopiero potem go obsluzyc
-//        try {
-//            filmRepository.save(film);
-//        } catch(RuntimeException e) {
-//            Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
-//            if(rootCause instanceof SQLException) {
-//                if("23505".equals(((SQLException) rootCause).getSQLState())) {
-//                    throw new UniqueConstraintException("A film with this title exists in the database", rootCause);
-//                }
-//            }
-//        }
-//
-//        return film;
-//    }
 
     @Override
     public Film updateFilm(Long filmId, FilmUpdateRequest filmUpdateRequest) {
@@ -159,29 +120,10 @@ public class FilmServiceImpl implements FilmService {
         fullFilmResponse.setDescription(film.getDescription());
         fullFilmResponse.setPremiereYear(film.getPremiereYear());
 
-//        for(Actor actor : film.getActors()) {
-//            SimpleActorResponse simpleActorResponse = new SimpleActorResponse();
-//            simpleActorResponse.setId(actor.getId());
-//            simpleActorResponse.setFirstname(actor.getFirstname());
-//            simpleActorResponse.setLastname(actor.getLastname());
-//            simpleActorResponse.setHeight(actor.getHeight());
-//            fullFilmResponse.getActors().add(simpleActorResponse);
-//        }
-
-//        for(Comment comment : film.getComments()) {
-//            CommentResponse commentResponse = new CommentResponse();
-//            commentResponse.setId(comment.getId());
-//            commentResponse.setContent(comment.getContent());
-//            User user = userRepository.findById(comment.getUser().getId()).orElseThrow(() -> new ResourceNotFoundException("User", "Id", comment.getUser().getId()));
-//            commentResponse.setUsername(user.getUsername());
-//            fullFilmResponse.getComments().add(commentResponse);
-//        }
-
         return fullFilmResponse;
     }
 
 
-    //TODO taki sam aktor w jednym filmie (HashSet)
     @Override
     @Transactional
     public void addActorToFilm(Long filmId, Long actorId) {
@@ -229,7 +171,6 @@ public class FilmServiceImpl implements FilmService {
         User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new ResourceNotFoundException("User", "Id", currentUser.getId()));
         Film film = filmRepository.findById(filmId).orElseThrow(() -> new ResourceNotFoundException("Film", "Id", filmId));
         user.getUserFilms().add(film);
-//        film.getUsers().add(user);
     }
 
     @Override

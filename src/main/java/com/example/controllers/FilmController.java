@@ -36,11 +36,6 @@ public class FilmController {
         return filmService.findAllFilms(filmSpecification, pageable);
     }
 
-//    @GetMapping("/films")
-//    public List<SimpleFilmResponse> getFilms() {
-//        return filmService.findAllFilms();
-//    }
-
 
     @GetMapping("films/{filmId}/comments")
     public Page<CommentResponse> getComments(@PathVariable Long filmId, Pageable pageable) {
@@ -53,19 +48,10 @@ public class FilmController {
     }
 
 
-
     @GetMapping("/films/{filmId}")
     public FullFilmResponse getFilm(@PathVariable Long filmId) {
         return filmService.findFilmById(filmId);
     }
-
-
-    //@RequestBody odpowiada za to, ze jak przychodzi JSON to konwertuje go na film
-    //a potem serializuje go na JSONA
-    //@Valid uruchamia walidacje dla filmu (JSR-303)
-//    ResponseEntity represents the whole HTTP response: status code, headers, and body.
-//    Because of it, we can use it to fully configure the HTTP response.
-//    If we want to use it, we have to return it from the endpoint;
 
 
     @PostMapping("/films")
@@ -122,17 +108,6 @@ public class FilmController {
     public Page<FilmChoiceResponse> getFilmsChoices(FilmSpecification filmSpecification, Pageable pageable) {
         return filmService.getFilmsChoices(filmSpecification, pageable);
     }
-
-
 }
 
-//dodawanie z selecta, aktora do filmu
-//wyszukiwanie
-///actors/choices
-//        [{
-//            'display': "tom Hasnks"
-//            'id': 2
-//        }]
-//
-//Tom - > ilike '%tom%'
 

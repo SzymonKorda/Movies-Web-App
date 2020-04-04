@@ -9,9 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface FilmService {
 
-//    Film findById(Long filmId);
     Page<SimpleFilmResponse> findAllFilms(FilmSpecification filmSpecification, Pageable pageable);
-//    List<SimpleFilmResponse> findAllFilms();
     void newFilm(NewFilmRequest newFilmRequest);
     Film updateFilm(Long filmId, FilmUpdateRequest filmUpdateRequest);
     void deleteFilmById(Long filmId);
@@ -22,5 +20,4 @@ public interface FilmService {
     Page<SimpleFilmResponse> getByActorId(Pageable pageable, Long actorId);
     void deleteActorFilm(Long filmId, Long actorId);
     Page<FilmChoiceResponse> getFilmsChoices(FilmSpecification filmSpecification, Pageable pageable);
-
 }

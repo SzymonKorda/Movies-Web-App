@@ -67,22 +67,16 @@ public class ActorController {
     }
 
     @DeleteMapping("/actors/{actorId}/films/{filmId}")
-    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<?> deleteFilmActor(@PathVariable Long actorId, @PathVariable Long filmId) {
         actorService.deleteActorFilm(actorId, filmId);
         return ResponseEntity.ok(new ApiResponse(true, "Actor's films deleted successfully"));
     }
-
-
 
     @GetMapping("/actors/choices")
     public Page<ActorChoiceResponse> getActorsChoices(ActorSpecification actorSpecification, Pageable pageable) {
         return actorService.getActorsChoices(actorSpecification, pageable);
     }
 
-//    @RequestParam(defaultValue = "0") Integer pageNo,
-//    @RequestParam(defaultValue = "15") Integer pageSize,
-//    @RequestParam(defaultValue = "id") String sortBy,
-//    @RequestParam(defaultValue = "desc") String order)
 
 }

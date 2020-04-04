@@ -1,4 +1,4 @@
-package com.example.responses;
+package com.example.payload;
 
 public class DefaultErrorResponse {
     private int status;

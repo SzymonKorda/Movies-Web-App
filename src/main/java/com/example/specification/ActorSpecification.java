@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 
 @Or({
-//        @Spec(path = "firstName", params = "search", spec = LikeIgnoreCase.class),
         @Spec(path = "lastName", params = "search", spec = LikeIgnoreCase.class),
 })
 public interface ActorSpecification extends Specification<Actor> {

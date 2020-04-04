@@ -42,23 +42,4 @@ public class UserController {
         return ResponseEntity.ok(new ApiResponse(true, "User's film deleted successfully"));
     }
 
-//      ulubione
-//    /films/id/favourites
-
-//    @PostMapping("films/{filmId}/favourites")
-//    @RolesAllowed("ROLE_USER")
-//    public
-
-
-
-//    @PostMapping("/users/{userId}/films")
-//    @RolesAllowed("ROLE_USER")
-//    public ResponseEntity<?> addFilmToUser(@PathVariable Long , @Valid @RequestBody IdRequest idRequest) {
-//        userService.addFilmToUser(userId, idRequest);
-//        return ResponseEntity.ok(new ApiResponse(true, "Film added to User successfully"));
-//    }
-
-
-///films/{id}/favourites
-
 }

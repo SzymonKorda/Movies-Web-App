@@ -28,15 +28,6 @@ public class UserServiceImpl implements UserService {
         this.filmRepository = filmRepository;
     }
 
-//    @Override
-//    @Transactional
-//    public void addFilmToUser(Long userId, IdRequest idRequest) {
-//        Film film = filmRepository.findById(idRequest.getId()).orElseThrow(() -> new ResourceNotFoundException("Film", "id", idRequest.getId()));
-//        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-//
-//        user.getUserFilms().add(film);
-//        film.getUsers().add(user);
-//    }
 
     @Override
     public UserProfileResponse findUserById(Long userId) {
@@ -51,7 +42,6 @@ public class UserServiceImpl implements UserService {
             SimpleFilmResponse simpleFilmResponse = new SimpleFilmResponse();
             simpleFilmResponse.setId(film.getId());
             simpleFilmResponse.setTitle(film.getTitle());
-//            simpleFilmResponse.setBoxoffice(film.getBoxoffice());
             simpleFilmResponse.setDuration(film.getDuration());
             userProfileResponse.getUserFilms().add(simpleFilmResponse);
         }

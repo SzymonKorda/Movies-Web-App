@@ -80,25 +80,6 @@ public class ActorServiceImpl implements ActorService {
     }
 
 
-    //    @Override
-//    public Page<SimpleActorResponse> getAllActors() {
-//
-//        List<Actor> actorsList = actorRepository.findAll();
-//        List<SimpleActorResponse> simpleActorResponseList = new ArrayList<>();
-//
-//        for(Actor actor : actorsList) {
-//            SimpleActorResponse simpleActorResponse = new SimpleActorResponse();
-//            simpleActorResponse.setId(actor.getId());
-//            simpleActorResponse.setFirstname(actor.getFirstname());
-//            simpleActorResponse.setLastname(actor.getLastname());
-//            simpleActorResponse.setHeight(actor.getHeight());
-//            simpleActorResponseList.add(simpleActorResponse);
-//        }
-//
-//        return simpleActorResponseList;
-//    }
-
-
     @Override
     public Page<SimpleActorResponse> getAllActors(ActorSpecification actorSpecification, Pageable pageable) {
 
@@ -179,12 +160,6 @@ public class ActorServiceImpl implements ActorService {
 
     @Override
     public Page<ActorChoiceResponse> getActorsChoices(ActorSpecification actorSpecification, Pageable pageable) {
-
-//        if(order.equals("asc")) {
-//            pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
-//        } else {
-//            pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
-//        }
 
 
         Page<Actor> actorsListPage = actorRepository.findAll(actorSpecification, pageable);

@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name =  "film")
+@Table(name =  "film", uniqueConstraints = {@UniqueConstraint(
+        columnNames = {
+                "title",
+                "premiere_year"
+        }
+)})
 public class Film {
 
     @Id
@@ -16,7 +21,7 @@ public class Film {
     private long id;
 
     @NotBlank(message = "Title is mandatory")
-    @Column(name = "title", unique = true)
+    @Column(name = "title")
     private String title;
 
     @NotBlank(message = "Description is mandatory")
@@ -55,6 +60,10 @@ public class Film {
 
     public Film() {
 
+    }
+
+    public Film(@NotBlank(message = "Title is mandatory") String title) {
+        this.title = title;
     }
 
     public String getDescription() {

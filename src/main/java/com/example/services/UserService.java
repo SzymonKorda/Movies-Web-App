@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-//    void addFilmToUser(Long filmId, @CurrentUser UserPrincipal currentUser);
     UserProfileResponse findUserById(Long userId);
     Page<SimpleFilmResponse> getUserFilms(FilmSpecification filmSpecification, Pageable pageable, Long userId);
     void deleteUserFilmById(Long filmId, Long userId);

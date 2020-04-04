@@ -13,7 +13,7 @@ public class JwtAuthenticationResponse {
     public JwtAuthenticationResponse(String accessToken, UserPrincipal userPrincipal) {
         this.accessToken = accessToken;
         this.userId = userPrincipal.getId();
-        this.displayName = userPrincipal.getName();
+        this.displayName = userPrincipal.getUsername();
         this.isAdmin = userPrincipal.isAdmin();
     }
 
